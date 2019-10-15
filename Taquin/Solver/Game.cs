@@ -32,12 +32,67 @@ namespace Solver
 
         public bool MakeMove(int i1, int j1, int i2, int j2)
         {
-            if (this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0)
+            if (this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || 1 < Math.Abs(i1 - i2) + Math.Abs(j1 - j2))
                 return false;
 
             this.grid[i2, j2] = this.grid[i1, j1];
             this.grid[i1, j1] = 0;
             return true;
+        }
+        public void Shuffle(Random rng, int moveCount)
+        {
+            while (0 < --moveCount)
+            {
+                int i1 = rng.Next(0, this.size);
+                int j1 = rng.Next(0, this.size);
+
+                int i2 = 0, j2 = 0;
+                switch (rng.Next(0, 4))
+                {
+                    case 0:
+                        i2 = -1;
+                        j2 = 0;
+                        break;
+                    case 1:
+                        i2 = 0;
+                        j2 = 1;
+                        break;
+                    case 2:
+                        i2 = 1;
+                        j2 = 0;
+                        break;
+                    case 3:
+                        i2 = 0;
+                        j2 = -1;
+                        break;
+                }
+
+                this.MakeMove(i1, j1, i2, j2);
+            }
+        }
+
+        internal int[,] ToGrid()
+        {
+            return this.grid;
+        }
+
+        internal List<int[]> NextSteps(int[,] grid)
+        {
+            return new List<int[]>();
+        }
+
+        internal int[,] SimulMove(int i1, int j1, int i2, int j2)
+        {
+            int[,] r = new int[this.size, this.size];
+
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    r[i, j] = this.grid[i, j];
+
+            r[i2, j2] = r[i1, j1];
+            r[i1, j1] = 0;
+
+            return r;
         }
 
     }
