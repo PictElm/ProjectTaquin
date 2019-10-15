@@ -11,31 +11,30 @@ namespace Solver
 
         private Node init;
 
-        private List<Node> opened;
-        private List<Node> closed;
+        public List<Node> Opened { get; private set; }
+        public List<Node> Closed { get; private set; }
 
         public Graph(Node init)
         {
             this.init = init;
 
-            this.opened = new List<Node>();
-            this.closed = new List<Node>();
+            this.Opened = new List<Node>();
+            this.Closed = new List<Node>();
         }
-
-        private String TestString(int[,] state)
-        {
-            String r = "";
-
-            return r;
-        }
-
+        
         private Node FindIfExist(int[,] grid)
         {
-            Node r = null;
+            String test = new Node(grid).ToString();
 
-            String test = 
+            foreach (var node in this.Opened)
+                if (node.ToString() == test)
+                    return node;
 
-            return r;
+            foreach (var node in this.Closed)
+                if (node.ToString() == test)
+                    return node;
+
+            return null;
         }
 
     }

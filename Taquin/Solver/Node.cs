@@ -32,5 +32,15 @@ namespace Solver
             child.MoveCount++;
         }
 
+        public override string ToString()
+        {
+            StringBuilder r = new StringBuilder();
+
+            foreach (var a in this.grid)
+                r.Append(a);
+
+            return r.ToString();
+        }
+
     }
 }

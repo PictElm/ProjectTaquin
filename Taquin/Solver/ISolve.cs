@@ -8,6 +8,8 @@ namespace Solver
 {
     public interface ISolve
     {
+
         void Solve(Game game, int[,] finalState);
+
     }
 }
