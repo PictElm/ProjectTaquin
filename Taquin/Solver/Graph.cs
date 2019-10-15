@@ -22,7 +22,7 @@ namespace Solver
             this.Closed = new List<Node>();
         }
         
-        private Node FindIfExist(int[,] grid)
+        public Node FindIfExist(int[,] grid)
         {
             String test = new Node(grid).ToString();
 

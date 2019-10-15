@@ -16,11 +16,35 @@ namespace Solver
 
             while (final == null)
             {
+                // "déplis" les nodes das la liste des ouverts en trouvant touts les états suivant (enfants)
                 List<Node> nexts = new List<Node>();
+
+                // pour ce faire : on parcoure la liste des ouverts
                 foreach (var node in g.Opened)
                 {
+                    // pour chaque états des ouverts, on récupère la liste des mouvements possibles
+                    int[,] fromGrid = node.ToGrid();
+                    var moves = Game.NextSteps(fromGrid);
 
+                    // pour chaque mouvement possible, on :
+                    foreach (var move in moves)
+                    {
+                        int[,] newState = Game.SimulMove(move[0], move[1], move[2], move[3], fromGrid);
+                        Node newNode = null;
+
+                        // vérifit si il s'agit d'un état déjà observé ou en cours d'observation
+                        newNode = g.FindIfExist(newState);
+                        // si ça n'est pas le cas, on l'ajout dans les états "dépliés"
+                        if (newNode == null)
+                        {
+                            newNode = new Node(newState);
+                            nexts.Add(newNode);
+                            node.Attach(newNode);
+                        }
+                    }
                 }
+
+
             }
         }
 
