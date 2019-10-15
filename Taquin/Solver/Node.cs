@@ -42,5 +42,10 @@ namespace Solver
             return r.ToString();
         }
 
+        internal int[,] ToGrid()
+        {
+            return this.grid;
+        }
+
     }
 }

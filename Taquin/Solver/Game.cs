@@ -39,6 +39,8 @@ namespace Solver
             this.grid[i1, j1] = 0;
             return true;
         }
+
+        // FIXME: out of ranges
         public void Shuffle(Random rng, int moveCount)
         {
             while (0 < --moveCount)
@@ -76,21 +78,39 @@ namespace Solver
             return this.grid;
         }
 
-        internal List<int[]> NextSteps(int[,] grid)
+        internal int[,] SimulMove(int i1, int j1, int i2, int j2)
+        {
+            int[,] r = Game.CopyGrid(this.grid);
+
+            r[i2, j2] = r[i1, j1];
+            r[i1, j1] = 0;
+
+            return r;
+        }
+
+        internal static int[,] SimulMove(int i1, int j1, int i2, int j2, int[,] fromGrid)
+        {
+            int[,] r = Game.CopyGrid(fromGrid);
+
+            r[i2, j2] = r[i1, j1];
+            r[i1, j1] = 0;
+
+            return r;
+        }
+
+        // TODO: yep
+        internal static List<int[]> NextSteps(int[,] grid)
         {
             return new List<int[]>();
         }
 
-        internal int[,] SimulMove(int i1, int j1, int i2, int j2)
+        internal static int[,] CopyGrid(int[,] grid)
         {
-            int[,] r = new int[this.size, this.size];
+            int[,] r = new int[grid.GetLength(0), grid.GetLength(1)];
 
-            for (int i = 0; i < size; i++)
-                for (int j = 0; j < size; j++)
-                    r[i, j] = this.grid[i, j];
-
-            r[i2, j2] = r[i1, j1];
-            r[i1, j1] = 0;
+            for (int i = 0; i < grid.GetLength(0); i++)
+                for (int j = 0; j < grid.GetLength(1); j++)
+                    r[i, j] = grid[i, j];
 
             return r;
         }
