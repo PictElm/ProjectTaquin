@@ -1,2 +1,0 @@
-c:\users\adebarros\documents\visual studio 2015\Projects\Taquin\lul\bin\Debug\lul.exe.config
-H:\2A\I.A\ProjectTaquin\Taquin\lul\bin\Debug\lul.exe.config
