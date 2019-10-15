@@ -39,33 +39,41 @@ namespace Solver
             this.grid[i1, j1] = 0;
             return true;
         }
-
-        // FIXME: out of ranges
+        
         public void Shuffle(Random rng, int moveCount)
         {
+            // liste les coordonées des espaces vides
+            int[][] zeros = new int[this.gapCount][];
+            int k = 0;
+            for (int i = 0; i < this.grid.GetLength(0); i++)
+                for (int j = 0; j < this.grid.GetLength(1); j++)
+                    if (this.grid[i, j] == 0)
+                        zeros[k++] = new int[2] { i, j };
+
             while (0 < --moveCount)
             {
-                int i1 = rng.Next(0, this.size);
-                int j1 = rng.Next(0, this.size);
+                int[] gap = zeros[rng.Next(this.gapCount)];
 
-                int i2 = 0, j2 = 0;
+                int i1 = 0, j1 = 0;
+                int i2 = gap[0], j2 = gap[1];
+
                 switch (rng.Next(0, 4))
                 {
                     case 0:
-                        i2 = -1;
-                        j2 = 0;
+                        i1 = i2 + 1;
+                        j1 = j2 + 0;
                         break;
                     case 1:
-                        i2 = 0;
-                        j2 = 1;
+                        i1 = i2 + 0;
+                        j1 = j2 + -1;
                         break;
                     case 2:
-                        i2 = 1;
-                        j2 = 0;
+                        i1 = i2 + -1;
+                        j1 = j2 + 0;
                         break;
                     case 3:
-                        i2 = 0;
-                        j2 = -1;
+                        i1 = i2 + 0;
+                        j1 = j2 + 1;
                         break;
                 }
 

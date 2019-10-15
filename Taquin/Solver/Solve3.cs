@@ -9,14 +9,14 @@ namespace Solver
     public class Solve3 : ISolve
     {
 
-        public void Solve(Game game, int[,] finalState)
+        public Solution Solve(Game game, int[,] finalState)
         {
             Graph g = new Graph(new Node(game.ToGrid()));
             Node final = null;
 
             while (final == null)
             {
-                // "déplis" les nodes das la liste des ouverts en trouvant touts les états suivant (enfants)
+                // "déplis" les nodes dans la liste des ouverts en trouvant touts les états suivant (enfants)
                 List<Node> nexts = new List<Node>();
 
                 // pour ce faire : on parcoure la liste des ouverts
@@ -44,8 +44,18 @@ namespace Solver
                     }
                 }
 
+                // déplace tous les états d'ouverts dans fermés
+                g.Closed.AddRange(g.Opened);
+                g.Opened.Clear();
 
+                // place tous les nouveaux états
+                g.Opened.AddRange(nexts);
+
+                // vérifis si on a trouver un chemin vers l'état final
+                final = g.FindIfExist(finalState);
             }
+
+            return new Solution(g, final);
         }
 
     }
