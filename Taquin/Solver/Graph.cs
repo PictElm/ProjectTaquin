@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Solver
 {
-    class Graph
+    public class Graph
     {
 
         private Node init;

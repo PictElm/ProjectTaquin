@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Solver
 {
-    class Node
+    public class Node
     {
 
         private int[,] grid;

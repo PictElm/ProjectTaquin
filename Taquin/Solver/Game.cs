@@ -32,7 +32,7 @@ namespace Solver
 
         public bool MakeMove(int i1, int j1, int i2, int j2)
         {
-            if (this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || 1 < Math.Abs(i1 - i2) + Math.Abs(j1 - j2))
+            if (this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || Math.Abs(i1 - i2) + Math.Abs(j1 - j2) != 1)
                 return false;
 
             this.grid[i2, j2] = this.grid[i1, j1];
@@ -105,11 +105,39 @@ namespace Solver
 
             return r;
         }
-
-        // TODO: yep
+        
         internal static List<int[]> NextSteps(int[,] grid)
         {
-            return new List<int[]>();
+            var r = new List<int[]>();
+
+            // liste les coordonées des espaces vides
+            List<int[]> zeros = new List<int[]>();
+            for (int i = 0; i < grid.GetLength(0); i++)
+                for (int j = 0; j < grid.GetLength(1); j++)
+                    if (grid[i, j] == 0)
+                        zeros.Add(new int[2] { i, j });
+
+            int[][] adjacents = {
+                new int[2] { 1, 0 },
+                new int[2] { 0, -1 },
+                new int[2] { -1, 0 },
+                new int[2] { 0, 1 }
+            };
+            // pour chaque case, on regarde tout ses voisins
+            foreach (var p in zeros)
+            {
+                int i1 = p[0], j1 = p[1];
+
+                foreach (var d in adjacents)
+                {
+                    int i2 = i1 + d[0], j2 = j1 + d[1];
+                    // on garde tous les mouvement valides
+                    if (grid[i2, j2] == 0 && grid[i1, j1] != 0 && Math.Abs(i1 - i2) + Math.Abs(j1 - j2) == 1)
+                        r.Add(new int[4] { i1, j1, i2, j2 });
+                }
+            }
+
+            return r;
         }
 
         internal static int[,] CopyGrid(int[,] grid)
