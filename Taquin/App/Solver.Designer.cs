@@ -30,7 +30,6 @@
         {
             this.TLP1 = new System.Windows.Forms.TableLayoutPanel();
             this.TLP2 = new System.Windows.Forms.TableLayoutPanel();
-            this.TV1 = new System.Windows.Forms.TreeView();
             this.btn1 = new System.Windows.Forms.Button();
             this.btn2 = new System.Windows.Forms.Button();
             this.btn3 = new System.Windows.Forms.Button();
@@ -40,6 +39,7 @@
             this.btn7 = new System.Windows.Forms.Button();
             this.btn8 = new System.Windows.Forms.Button();
             this.btn9 = new System.Windows.Forms.Button();
+            this.TV1 = new System.Windows.Forms.TreeView();
             this.TLP1.SuspendLayout();
             this.TLP2.SuspendLayout();
             this.SuspendLayout();
@@ -88,16 +88,6 @@
             this.TLP2.Size = new System.Drawing.Size(358, 375);
             this.TLP2.TabIndex = 1;
             // 
-            // TV1
-            // 
-            this.TV1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TV1.Location = new System.Drawing.Point(3, 3);
-            this.TV1.Name = "TV1";
-            this.TV1.Size = new System.Drawing.Size(230, 375);
-            this.TV1.TabIndex = 2;
-            // 
             // btn1
             // 
             this.btn1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -105,7 +95,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn1.Location = new System.Drawing.Point(3, 3);
             this.btn1.Name = "btn1";
-            this.btn1.Size = new System.Drawing.Size(113, 118);
+            this.btn1.Size = new System.Drawing.Size(113, 119);
             this.btn1.TabIndex = 0;
             this.btn1.UseVisualStyleBackColor = true;
             // 
@@ -116,7 +106,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn2.Location = new System.Drawing.Point(122, 3);
             this.btn2.Name = "btn2";
-            this.btn2.Size = new System.Drawing.Size(113, 118);
+            this.btn2.Size = new System.Drawing.Size(113, 119);
             this.btn2.TabIndex = 1;
             this.btn2.UseVisualStyleBackColor = true;
             // 
@@ -127,7 +117,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn3.Location = new System.Drawing.Point(241, 3);
             this.btn3.Name = "btn3";
-            this.btn3.Size = new System.Drawing.Size(114, 118);
+            this.btn3.Size = new System.Drawing.Size(114, 119);
             this.btn3.TabIndex = 2;
             this.btn3.UseVisualStyleBackColor = true;
             // 
@@ -136,9 +126,9 @@
             this.btn4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn4.Location = new System.Drawing.Point(3, 127);
+            this.btn4.Location = new System.Drawing.Point(3, 128);
             this.btn4.Name = "btn4";
-            this.btn4.Size = new System.Drawing.Size(113, 118);
+            this.btn4.Size = new System.Drawing.Size(113, 119);
             this.btn4.TabIndex = 3;
             this.btn4.UseVisualStyleBackColor = true;
             // 
@@ -147,9 +137,9 @@
             this.btn5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn5.Location = new System.Drawing.Point(122, 127);
+            this.btn5.Location = new System.Drawing.Point(122, 128);
             this.btn5.Name = "btn5";
-            this.btn5.Size = new System.Drawing.Size(113, 118);
+            this.btn5.Size = new System.Drawing.Size(113, 119);
             this.btn5.TabIndex = 4;
             this.btn5.UseVisualStyleBackColor = true;
             // 
@@ -158,9 +148,9 @@
             this.btn6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn6.Location = new System.Drawing.Point(241, 127);
+            this.btn6.Location = new System.Drawing.Point(241, 128);
             this.btn6.Name = "btn6";
-            this.btn6.Size = new System.Drawing.Size(114, 118);
+            this.btn6.Size = new System.Drawing.Size(114, 119);
             this.btn6.TabIndex = 5;
             this.btn6.UseVisualStyleBackColor = true;
             // 
@@ -169,9 +159,9 @@
             this.btn7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn7.Location = new System.Drawing.Point(3, 251);
+            this.btn7.Location = new System.Drawing.Point(3, 253);
             this.btn7.Name = "btn7";
-            this.btn7.Size = new System.Drawing.Size(113, 121);
+            this.btn7.Size = new System.Drawing.Size(113, 119);
             this.btn7.TabIndex = 6;
             this.btn7.UseVisualStyleBackColor = true;
             // 
@@ -180,9 +170,9 @@
             this.btn8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn8.Location = new System.Drawing.Point(122, 251);
+            this.btn8.Location = new System.Drawing.Point(122, 253);
             this.btn8.Name = "btn8";
-            this.btn8.Size = new System.Drawing.Size(113, 121);
+            this.btn8.Size = new System.Drawing.Size(113, 119);
             this.btn8.TabIndex = 7;
             this.btn8.UseVisualStyleBackColor = true;
             // 
@@ -191,11 +181,22 @@
             this.btn9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn9.Location = new System.Drawing.Point(241, 251);
+            this.btn9.Location = new System.Drawing.Point(241, 253);
             this.btn9.Name = "btn9";
-            this.btn9.Size = new System.Drawing.Size(114, 121);
+            this.btn9.Size = new System.Drawing.Size(114, 119);
             this.btn9.TabIndex = 8;
             this.btn9.UseVisualStyleBackColor = true;
+            // 
+            // TV1
+            // 
+            this.TV1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TV1.Location = new System.Drawing.Point(3, 3);
+            this.TV1.Name = "TV1";
+            this.TV1.Size = new System.Drawing.Size(230, 375);
+            this.TV1.TabIndex = 2;
+            this.TV1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TV1_AfterSelect);
             // 
             // SolverForm
             // 

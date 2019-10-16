@@ -37,6 +37,16 @@ namespace App
                     n++;
                 }
                 BtnList[i].Text = newGame[n, m].ToString();
+                if (BtnList[i].Text == "0")
+                {
+                    BtnList[i].BackColor = Color.White;
+                    BtnList[i].Text = "";
+                }
+                else
+                {
+                    BtnList[i].BackColor = Color.DarkGray;
+                    BtnList[i].ForeColor = Color.White;
+                }
                 m++;
             }
         }

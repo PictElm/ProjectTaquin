@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Solver;
 
 namespace App
 {
@@ -15,6 +16,13 @@ namespace App
         public SolverForm()
         {
             InitializeComponent();
+        }
+        
+        public Node selectedNode = new 
+
+        private void TV1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }
