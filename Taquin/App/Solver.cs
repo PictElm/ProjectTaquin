@@ -17,8 +17,6 @@ namespace App
         {
             InitializeComponent();
         }
-        
-        public Node selectedNode = new 
 
         private void TV1_AfterSelect(object sender, TreeViewEventArgs e)
         {

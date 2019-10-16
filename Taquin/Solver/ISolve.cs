@@ -16,25 +16,32 @@ namespace Solver
     public class Solution
     {
 
-        public List<int[,]> Stages;
+        public List<int[,]> Stages { get; private set; }
+        public List<int[]> Moves { get; private set; }
 
-        internal Solution(Graph g, Node final)
+        private Solution()
         {
             this.Stages = new List<int[,]>();
-            this.BuildPathFrom(final);
+            this.Moves = new List<int[]>();
         }
 
-        private void BuildPathFrom(Node final)
+        public static Solution BuildPathFrom(Graph g)
         {
-            Node current = final;
+            Solution r = new Solution();
+            Node current = g.GetFinal();
 
             while (current != null)
             {
-                this.Stages.Add(current.ToGrid());
+                r.Stages.Add(current.ToGrid());
+                r.Moves.Add(current.MoveFromParent);
+
                 current = current.Parent;
             }
 
-            this.Stages.Reverse();
+            r.Stages.Reverse();
+            r.Moves.Reverse();
+
+            return r;
         }
 
     }

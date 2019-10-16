@@ -39,7 +39,7 @@ namespace Solver
                         {
                             newNode = new Node(newState);
                             nexts.Add(newNode);
-                            node.Attach(newNode);
+                            node.Attach(newNode, move);
                         }
                     }
                 }
@@ -51,11 +51,12 @@ namespace Solver
                 // place tous les nouveaux états
                 g.Opened.AddRange(nexts);
 
-                // vérifis si on a trouver un chemin vers l'état final
+                // vérifis si on a trouvé un chemin vers l'état final
                 final = g.FindIfExist(finalState);
             }
+            g.Finish(final);
 
-            return new Solution(g, final);
+            return Solution.BuildPathFrom(g);
         }
 
     }

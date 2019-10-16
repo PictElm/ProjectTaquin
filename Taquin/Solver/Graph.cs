@@ -10,6 +10,7 @@ namespace Solver
     {
 
         private Node init;
+        private Node final;
 
         public List<Node> Opened { get; private set; }
         public List<Node> Closed { get; private set; }
@@ -35,6 +36,16 @@ namespace Solver
                     return node;
 
             return null;
+        }
+
+        public void Finish(Node final)
+        {
+            this.final = final;
+        }
+
+        public Node GetFinal()
+        {
+            return this.final;
         }
 
     }
