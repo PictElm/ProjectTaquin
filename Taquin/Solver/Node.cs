@@ -14,6 +14,7 @@ namespace Solver
         public Node Parent { get; private set; }
         private List<Node> children;
 
+        public int[] MoveFromParent { get; private set; }
         public int MoveCount { get; private set; }
 
         public Node(int[,] gameState)
@@ -24,11 +25,12 @@ namespace Solver
             this.children = new List<Node>();
         }
 
-        public void Attach(Node child)
+        public void Attach(Node child, int[] moveFromParentToChild)
         {
             this.children.Add(child);
             child.Parent = this;
 
+            child.MoveFromParent = moveFromParentToChild;
             child.MoveCount++;
         }
 
