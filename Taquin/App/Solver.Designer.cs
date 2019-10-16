@@ -39,7 +39,7 @@
             this.btn7 = new System.Windows.Forms.Button();
             this.btn8 = new System.Windows.Forms.Button();
             this.btn9 = new System.Windows.Forms.Button();
-            this.TV1 = new System.Windows.Forms.TreeView();
+            this.lb1 = new System.Windows.Forms.ListBox();
             this.TLP1.SuspendLayout();
             this.TLP2.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.TLP1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.46541F));
             this.TLP1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.53459F));
             this.TLP1.Controls.Add(this.TLP2, 1, 0);
-            this.TLP1.Controls.Add(this.TV1, 0, 0);
+            this.TLP1.Controls.Add(this.lb1, 0, 0);
             this.TLP1.Location = new System.Drawing.Point(24, 14);
             this.TLP1.Name = "TLP1";
             this.TLP1.RowCount = 1;
@@ -187,16 +187,14 @@
             this.btn9.TabIndex = 8;
             this.btn9.UseVisualStyleBackColor = true;
             // 
-            // TV1
+            // lb1
             // 
-            this.TV1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TV1.Location = new System.Drawing.Point(3, 3);
-            this.TV1.Name = "TV1";
-            this.TV1.Size = new System.Drawing.Size(230, 375);
-            this.TV1.TabIndex = 2;
-            this.TV1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TV1_AfterSelect);
+            this.lb1.FormattingEnabled = true;
+            this.lb1.Location = new System.Drawing.Point(3, 3);
+            this.lb1.Name = "lb1";
+            this.lb1.Size = new System.Drawing.Size(230, 368);
+            this.lb1.TabIndex = 2;
+            this.lb1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // SolverForm
             // 
@@ -225,6 +223,6 @@
         private System.Windows.Forms.Button btn7;
         private System.Windows.Forms.Button btn8;
         private System.Windows.Forms.Button btn9;
-        private System.Windows.Forms.TreeView TV1;
+        private System.Windows.Forms.ListBox lb1;
     }
 }
