@@ -62,6 +62,8 @@ namespace App
             }
         }
 
+        private ISolve solver;
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedNode = (Solution.Step) lb1.SelectedItem;
@@ -97,9 +99,14 @@ namespace App
                 { int.Parse(btn4.Text), int.Parse(btn5.Text), int.Parse(btn6.Text) }, 
                 { int.Parse(btn7.Text), int.Parse(btn8.Text), int.Parse(btn9.Text) } };
 
-            Game newGame = new Game(3, countGaps(currentGrid));
-            Solve3 solver = new Solve3();
-            Solution solution = solver.Solve(newGame, getFinalGrid(3, countGaps(currentGrid)));
+            int gapCount = CountGaps(currentGrid);
+            Game newGame = new Game(3, gapCount);
+
+            newGame.LoadGrid(currentGrid); // état initial
+            int[,] finalGrid = getFinalGrid(3, gapCount); // état final
+
+            solver = new Solve3();
+            Solution solution = solver.Solve(newGame, finalGrid);
             lb1.DataSource = solution.Steps;
 
         }
@@ -215,7 +222,7 @@ namespace App
             }
         }
 
-        private int countGaps(int[,] grid)
+        private int CountGaps(int[,] grid)
         {
             int nbGaps = 0;
             foreach (int elem in grid)

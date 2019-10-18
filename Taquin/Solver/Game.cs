@@ -29,18 +29,18 @@ namespace Solver
         {
             get { return this.grid[i, j]; }
         }
-
-        public bool AreIn(params int[] list)
+        
+        public static bool AreIn(int size, params int[] list)
         {
             foreach (int k in list)
-                if (k < 0 || this.size - 1 < k)
+                if (k < 0 || size - 1 < k)
                     return false;
             return true;
         }
 
         public bool MakeMove(int i1, int j1, int i2, int j2)
         {
-            if (!this.AreIn(i1, j1, i2, j2) || this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || Math.Abs(i1 - i2) + Math.Abs(j1 - j2) != 1)
+            if (!Game.AreIn(this.size, i1, j1, i2, j2) || this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || Math.Abs(i1 - i2) + Math.Abs(j1 - j2) != 1)
                 return false;
             
             this.grid[i2, j2] = this.grid[i1, j1];
@@ -85,6 +85,11 @@ namespace Solver
                 // maj du nouvel emplacement de l'espace vide
                 zeros[random] = new int[2] { i1, j1 };
             }
+        }
+
+        public void LoadGrid(int[,] grid)
+        {
+            this.grid = Game.CopyGrid(grid);
         }
 
         public int[,] ToGrid()
@@ -138,7 +143,7 @@ namespace Solver
                 {
                     int i2 = i1 + d[0], j2 = j1 + d[1];
                     // on garde tous les mouvement valides
-                    if (grid[i2, j2] == 0 && grid[i1, j1] != 0 && Math.Abs(i1 - i2) + Math.Abs(j1 - j2) == 1)
+                    if (Game.AreIn(grid.GetLength(0), i1, j1, i1, j2) && grid[i2, j2] == 0 && grid[i1, j1] != 0 && Math.Abs(i1 - i2) + Math.Abs(j1 - j2) == 1)
                         r.Add(new int[4] { i1, j1, i2, j2 });
                 }
             }
