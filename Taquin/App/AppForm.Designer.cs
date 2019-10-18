@@ -31,7 +31,9 @@
             this.btn1 = new System.Windows.Forms.Button();
             this.btn2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gameSizeNum = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gameSizeNum)).BeginInit();
             this.SuspendLayout();
             // 
             // btn1
@@ -71,12 +73,35 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tableLayoutPanel1.Controls.Add(this.btn2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gameSizeNum, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(426, 193);
             this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // gameSizeNum
+            // 
+            this.gameSizeNum.Location = new System.Drawing.Point(194, 3);
+            this.gameSizeNum.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.gameSizeNum.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.gameSizeNum.Name = "gameSizeNum";
+            this.gameSizeNum.Size = new System.Drawing.Size(36, 20);
+            this.gameSizeNum.TabIndex = 2;
+            this.gameSizeNum.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // AppForm
             // 
@@ -87,6 +112,7 @@
             this.Name = "AppForm";
             this.Text = "butt";
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gameSizeNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -96,5 +122,6 @@
         private System.Windows.Forms.Button btn1;
         private System.Windows.Forms.Button btn2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.NumericUpDown gameSizeNum;
     }
 }

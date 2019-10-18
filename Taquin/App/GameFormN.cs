@@ -41,8 +41,6 @@ namespace App
             this.InitializeGrid(size);
             
             this.Size = new Size(120 * size + 16, 120 * size + 39);
-
-            this.SetGame(new Game(size, 1));
         }
 
         public void InitializeGrid(int size)

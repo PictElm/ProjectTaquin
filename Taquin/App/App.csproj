@@ -72,6 +72,12 @@
     <Compile Include="SolverForm.Designer.cs">
       <DependentUpon>SolverForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SolverFormN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SolverFormN.Designer.cs">
+      <DependentUpon>SolverFormN.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AppForm.resx">
       <DependentUpon>AppForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +98,9 @@
     </Compile>
     <EmbeddedResource Include="SolverForm.resx">
       <DependentUpon>SolverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SolverFormN.resx">
+      <DependentUpon>SolverFormN.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

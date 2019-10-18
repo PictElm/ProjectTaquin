@@ -7,33 +7,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Solver;
 
 namespace App
 {
     public partial class AppForm : Form
     {
-        public AppForm()
-        {
-            InitializeComponent();
-        }
+
+        private Game game;
+        private int size;
 
         private GameFormN launchedGame;
 
+        public AppForm()
+        {
+            this.InitializeComponent();
+        }
+
         private void btn2_Click(object sender, EventArgs e)
         {
-            GameFormN gameForm = new GameFormN(5);
-            launchedGame = gameForm;
-            gameForm.Show();
+            if (this.size == 0)
+                this.size = (int)this.gameSizeNum.Value;
+
+            this.game = new Game(this.size, 6);
+            this.launchedGame = new GameFormN(this.size);
+
+            this.launchedGame.SetGame(this.game);
+            this.launchedGame.Show();
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            SolverForm solvForm;
-            if (launchedGame != null)
-                solvForm = new SolverForm(null);
+            if (this.size == 0)
+                this.size = (int)this.gameSizeNum.Value;
+
+            SolverFormN solvForm;
+            if (this.game != null)
+                solvForm = new SolverFormN(this.size, this.game);
             else
-                solvForm = new SolverForm();
+                solvForm = new SolverFormN(this.size);
             solvForm.Show();
         }
+
     }
 }
