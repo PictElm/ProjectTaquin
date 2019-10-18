@@ -14,19 +14,19 @@ namespace App
     public partial class GameForm : Form
     {
         public Game newGame = new Game(3, 2);
-        private List<Button> BtnList = new List<Button>() { };
+        private List<Button> btnList = new List<Button>() { };
         private Button btnPressed;
         public GameForm()
         {
             InitializeComponent();
             Random r = new Random();
             newGame.Shuffle(r, 50);
-            refreshBoard();
+            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+            RefreshBoard();
         }
 
-        private void refreshBoard()
+        private void RefreshBoard()
         {
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
             int m = 0;
             int n = 0;
             for (int i = 0; i < 9; i++)
@@ -36,16 +36,16 @@ namespace App
                     m = 0;
                     n++;
                 }
-                BtnList[i].Text = newGame[n, m].ToString();
-                if (BtnList[i].Text == "0")
+                btnList[i].Text = newGame[n, m].ToString();
+                if (btnList[i].Text == "0")
                 {
-                    BtnList[i].BackColor = Color.White;
-                    BtnList[i].Text = "";
+                    btnList[i].BackColor = Color.White;
+                    btnList[i].Text = "";
                 }
                 else
                 {
-                    BtnList[i].BackColor = Color.DarkGray;
-                    BtnList[i].ForeColor = Color.White;
+                    btnList[i].BackColor = Color.DarkGray;
+                    btnList[i].ForeColor = Color.White;
                 }
                 m++;
             }
@@ -53,15 +53,13 @@ namespace App
 
         private int getLine(Button btn)
         {
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
-            int index = BtnList.IndexOf(btn);
+            int index = btnList.IndexOf(btn);
             return index / 3;
         }
         
         private int getCol(Button btn)
         {
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
-            int index = BtnList.IndexOf(btn);
+            int index = btnList.IndexOf(btn);
             return index % 3;
         }
 
@@ -74,7 +72,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn1), getCol(btn1));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -91,7 +89,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn2), getCol(btn2));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn3_Click(object sender, EventArgs e)
@@ -103,7 +101,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn3), getCol(btn3));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn4_Click(object sender, EventArgs e)
@@ -115,7 +113,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn4), getCol(btn4));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn5_Click(object sender, EventArgs e)
@@ -127,7 +125,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn5), getCol(btn5));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn6_Click(object sender, EventArgs e)
@@ -139,7 +137,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn6), getCol(btn6));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn7_Click(object sender, EventArgs e)
@@ -151,7 +149,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn7), getCol(btn7));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn8_Click(object sender, EventArgs e)
@@ -163,7 +161,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn8), getCol(btn8));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
 
         private void btn9_Click(object sender, EventArgs e)
@@ -175,7 +173,7 @@ namespace App
                 newGame.MakeMove(getLine(btnPressed), getCol(btnPressed), getLine(btn9), getCol(btn9));
                 btnPressed = null;
             }
-            refreshBoard();
+            RefreshBoard();
         }
     }
 }
