@@ -30,6 +30,8 @@ namespace Solver
 
             public override string ToString()
             {
+                if (this.move == null)
+                    return "Etat initial";
                 int i1 = this.move[0], j1 = this.move[1];
                 int i2 = this.move[2], j2 = this.move[3];
                 return $"({i1}, {j1}) -> ({i2}, {j2})";

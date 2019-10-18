@@ -137,13 +137,13 @@ namespace Solver
             // pour chaque case, on regarde tout ses voisins
             foreach (var p in zeros)
             {
-                int i1 = p[0], j1 = p[1];
+                int i2 = p[0], j2 = p[1];
 
                 foreach (var d in adjacents)
                 {
-                    int i2 = i1 + d[0], j2 = j1 + d[1];
+                    int i1 = i2 - d[0], j1 = j2 - d[1];
                     // on garde tous les mouvement valides
-                    if (Game.AreIn(grid.GetLength(0), i1, j1, i1, j2) && grid[i2, j2] == 0 && grid[i1, j1] != 0 && Math.Abs(i1 - i2) + Math.Abs(j1 - j2) == 1)
+                    if (Game.AreIn(grid.GetLength(0), i1, j1) && grid[i1, j1] != 0)
                         r.Add(new int[4] { i1, j1, i2, j2 });
                 }
             }
