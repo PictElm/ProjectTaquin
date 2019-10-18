@@ -17,11 +17,11 @@ namespace App
             InitializeComponent();
         }
 
-        private GameForm launchedGame;
+        private GameFormN launchedGame;
 
         private void btn2_Click(object sender, EventArgs e)
         {
-            GameForm gameForm = new GameForm();
+            GameFormN gameForm = new GameFormN(5);
             launchedGame = gameForm;
             gameForm.Show();
         }
@@ -30,7 +30,7 @@ namespace App
         {
             SolverForm solvForm;
             if (launchedGame != null)
-                solvForm = new SolverForm(launchedGame.newGame);
+                solvForm = new SolverForm(null);
             else
                 solvForm = new SolverForm();
             solvForm.Show();
