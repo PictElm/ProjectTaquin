@@ -12,9 +12,11 @@ namespace Solver
         public Solution Solve(Game game, int[,] finalState)
         {
             Graph g = new Graph(new Node(game.ToGrid()));
+
+            g.Opened.Add(new Node(game.ToGrid()));
             Node final = null;
 
-            while (final == null)
+            while (final == null && 0 < g.Opened.Count)
             {
                 // "déplis" les nodes dans la liste des ouverts en trouvant touts les états suivant (enfants)
                 List<Node> nexts = new List<Node>();
