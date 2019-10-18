@@ -16,13 +16,32 @@ namespace Solver
     public class Solution
     {
 
-        public List<int[,]> Stages { get; private set; }
-        public List<int[]> Moves { get; private set; }
+        public struct Step
+        {
+
+            public int[,] grid;
+            public int[] move;
+
+            public Step(int[,] grid, int[] move)
+            {
+                this.grid = grid;
+                this.move = move;
+            }
+
+            public override string ToString()
+            {
+                int i1 = this.move[0], j1 = this.move[1];
+                int i2 = this.move[2], j2 = this.move[3];
+                return $"({i1}, {j1}) -> ({i2}, {j2})";
+            }
+
+        }
+
+        public List<Step> Steps { get; private set; }
 
         private Solution()
         {
-            this.Stages = new List<int[,]>();
-            this.Moves = new List<int[]>();
+            this.Steps = new List<Step>();
         }
 
         public static Solution BuildPathFrom(Graph g)
@@ -32,14 +51,11 @@ namespace Solver
 
             while (current != null)
             {
-                r.Stages.Add(current.ToGrid());
-                r.Moves.Add(current.MoveFromParent);
-
+                r.Steps.Add(new Step(current.ToGrid(), current.MoveFromParent));
                 current = current.Parent;
             }
 
-            r.Stages.Reverse();
-            r.Moves.Reverse();
+            r.Steps.Reverse();
 
             return r;
         }
