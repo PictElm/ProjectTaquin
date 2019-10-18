@@ -17,15 +17,22 @@ namespace App
             InitializeComponent();
         }
 
+        private GameForm launchedGame;
+
         private void btn2_Click(object sender, EventArgs e)
         {
             GameForm gameForm = new GameForm();
+            launchedGame = gameForm;
             gameForm.Show();
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            SolverForm solvForm = new SolverForm();
+            SolverForm solvForm;
+            if (launchedGame != null)
+                solvForm = new SolverForm(launchedGame.newGame);
+            else
+                solvForm = new SolverForm();
             solvForm.Show();
         }
     }

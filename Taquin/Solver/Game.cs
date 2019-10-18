@@ -92,7 +92,7 @@ namespace Solver
             this.grid = Game.CopyGrid(grid);
         }
 
-        internal int[,] ToGrid()
+        public int[,] ToGrid()
         {
             return this.grid;
         }
