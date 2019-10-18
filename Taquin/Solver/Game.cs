@@ -151,6 +151,18 @@ namespace Solver
             return r;
         }
 
+        internal static int Heuristics(int[,] fromState, int[,] toState)
+        {
+            int r = 0;
+
+            for (int i = 0; i < fromState.GetLength(0); i++)
+                for (int j = 0; j < fromState.GetLength(1); j++)
+                    if (fromState[i, j] != toState[i, j])
+                        r++;
+
+            return r;
+        }
+
         internal static int[,] CopyGrid(int[,] grid)
         {
             int[,] r = new int[grid.GetLength(0), grid.GetLength(1)];

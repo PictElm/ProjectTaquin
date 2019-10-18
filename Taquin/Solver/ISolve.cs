@@ -9,7 +9,7 @@ namespace Solver
     public interface ISolve
     {
 
-        Solution Solve(Game game, int[,] finalState);
+        Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress);
 
     }
 

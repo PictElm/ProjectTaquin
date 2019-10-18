@@ -11,11 +11,25 @@ namespace Solver
 
         private int[,] grid;
 
-        public Node Parent { get; private set; }
+        private Node _parent;
+        public Node Parent
+        {
+            get { return this._parent; }
+            private set
+            {
+                if (value != null && this._parent != null)
+                    this._parent.Detach(this);
+                this._parent = value;
+            }
+        }
         private List<Node> children;
 
         public int[] MoveFromParent { get; private set; }
         public int MoveCount { get; private set; }
+
+        public int GCost { get; set; } // coût du chemin du noeud initial jusqu'à ce noeud
+        public int HCost { get; set; } // estimation heuristique du coût pour atteindre le noeud final
+        public int TotalCost { get { return this.GCost + this.HCost; } }
 
         public Node(int[,] gameState)
         {
@@ -32,6 +46,15 @@ namespace Solver
 
             child.MoveFromParent = moveFromParentToChild;
             child.MoveCount++;
+        }
+
+        public void Detach(Node child)
+        {
+            if (child.Parent == this)
+            {
+                this.children.Remove(child);
+                child.Parent = null;
+            }
         }
 
         public override string ToString()

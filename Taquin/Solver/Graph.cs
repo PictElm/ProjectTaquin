@@ -22,7 +22,7 @@ namespace Solver
             this.Opened = new List<Node>();
             this.Closed = new List<Node>();
         }
-        
+
         public Node FindIfExist(int[,] grid)
         {
             String test = new Node(grid).ToString();
@@ -30,6 +30,43 @@ namespace Solver
             foreach (var node in this.Opened)
                 if (node.ToString() == test)
                     return node;
+
+            foreach (var node in this.Closed)
+                if (node.ToString() == test)
+                    return node;
+
+            return null;
+        }
+
+        public Node FindIfExist(Node n)
+        {
+            String test = n.ToString();
+
+            foreach (var node in this.Opened)
+                if (node.ToString() == test)
+                    return node;
+
+            foreach (var node in this.Closed)
+                if (node.ToString() == test)
+                    return node;
+
+            return null;
+        }
+
+        public Node FindIfExistInOpened(Node n)
+        {
+            String test = n.ToString();
+
+            foreach (var node in this.Opened)
+                if (node.ToString() == test)
+                    return node;
+
+            return null;
+        }
+
+        public Node FindIfExistInClosed(Node n)
+        {
+            String test = n.ToString();
 
             foreach (var node in this.Closed)
                 if (node.ToString() == test)

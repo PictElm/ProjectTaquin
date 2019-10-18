@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Solver
 {
-    public class Solve3 : ISolve
+    public class SolveBrutForce : ISolve
     {
 
-        public Solution Solve(Game game, int[,] finalState)
+        public Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress)
         {
             Graph g = new Graph(new Node(game.ToGrid()));
 
@@ -18,7 +18,7 @@ namespace Solver
 
             while (final == null && 0 < g.Opened.Count)
             {
-                // "déplis" les nodes dans la liste des ouverts en trouvant touts les états suivant (enfants)
+                // suit les nodes dans la liste des ouverts en trouvant touts les états enfants
                 List<Node> nexts = new List<Node>();
 
                 // pour ce faire : on parcoure la liste des ouverts
@@ -36,7 +36,7 @@ namespace Solver
 
                         // vérifit si il s'agit d'un état déjà observé ou en cours d'observation
                         newNode = g.FindIfExist(newState);
-                        // si ça n'est pas le cas, on l'ajout dans les états "dépliés"
+                        // si ça n'est pas le cas, on l'ajout dans les ouverts
                         if (newNode == null)
                         {
                             newNode = new Node(newState);
@@ -56,8 +56,8 @@ namespace Solver
                 // vérifis si on a trouvé un chemin vers l'état final
                 final = g.FindIfExist(finalState);
             }
-            g.Finish(final);
 
+            g.Finish(final);
             return Solution.BuildPathFrom(g);
         }
 

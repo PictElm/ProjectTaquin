@@ -42,6 +42,7 @@
             this.lb1 = new System.Windows.Forms.ListBox();
             this.btnLaunch = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.solvingBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.TLP1.SuspendLayout();
             this.TLP2.SuspendLayout();
             this.SuspendLayout();
@@ -232,6 +233,14 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // solvingBackgroundWorker
+            // 
+            this.solvingBackgroundWorker.WorkerReportsProgress = true;
+            this.solvingBackgroundWorker.WorkerSupportsCancellation = true;
+            this.solvingBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.solvingBackgroundWorker_DoWork);
+            this.solvingBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.solvingBackgroundWorker_ProgressChanged);
+            this.solvingBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.solvingBackgroundWorker_RunWorkerCompleted);
+            // 
             // SolverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -242,6 +251,7 @@
             this.Controls.Add(this.TLP1);
             this.Name = "SolverForm";
             this.Text = "Tak1Solver";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SolverForm_FormClosing);
             this.TLP1.ResumeLayout(false);
             this.TLP2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -264,5 +274,6 @@
         private System.Windows.Forms.ListBox lb1;
         private System.Windows.Forms.Button btnLaunch;
         private System.Windows.Forms.Button btnReset;
+        private System.ComponentModel.BackgroundWorker solvingBackgroundWorker;
     }
 }
