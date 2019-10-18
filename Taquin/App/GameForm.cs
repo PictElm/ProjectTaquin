@@ -19,8 +19,8 @@ namespace App
         public GameForm()
         {
             InitializeComponent();
-            // Random r = new Random();
-            // newGame.Shuffle(r, 50);
+            Random r = new Random();
+            newGame.Shuffle(r, 50);
             refreshBoard();
         }
 

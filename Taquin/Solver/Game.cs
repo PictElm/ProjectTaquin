@@ -30,11 +30,19 @@ namespace Solver
             get { return this.grid[i, j]; }
         }
 
+        public bool AreIn(params int[] list)
+        {
+            foreach (int k in list)
+                if (k < 0 || this.size - 1 < k)
+                    return false;
+            return true;
+        }
+
         public bool MakeMove(int i1, int j1, int i2, int j2)
         {
-            if (this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || Math.Abs(i1 - i2) + Math.Abs(j1 - j2) != 1)
+            if (!this.AreIn(i1, j1, i2, j2) || this.grid[i2, j2] != 0 || this.grid[i1, j1] == 0 || Math.Abs(i1 - i2) + Math.Abs(j1 - j2) != 1)
                 return false;
-
+            
             this.grid[i2, j2] = this.grid[i1, j1];
             this.grid[i1, j1] = 0;
             return true;
@@ -50,34 +58,32 @@ namespace Solver
                     if (this.grid[i, j] == 0)
                         zeros[k++] = new int[2] { i, j };
 
-            while (0 < --moveCount)
+            // mouvements possibles depuis une case donnée
+            int[][] moves = new int[4][]
             {
-                int[] gap = zeros[rng.Next(this.gapCount)];
+                new int [2] { -1, 0 },
+                new int [2] { 0, 1 },
+                new int [2] { 1, 0 },
+                new int [2] { 0, -1 }
+            };
+
+            while (0 < moveCount--)
+            {
+                int random = rng.Next(this.gapCount);
+                int[] gap = zeros[random];
 
                 int i1 = 0, j1 = 0;
                 int i2 = gap[0], j2 = gap[1];
 
-                switch (rng.Next(0, 4))
-                {
-                    case 0:
-                        i1 = i2 + 1;
-                        j1 = j2 + 0;
-                        break;
-                    case 1:
-                        i1 = i2 + 0;
-                        j1 = j2 + -1;
-                        break;
-                    case 2:
-                        i1 = i2 + -1;
-                        j1 = j2 + 0;
-                        break;
-                    case 3:
-                        i1 = i2 + 0;
-                        j1 = j2 + 1;
-                        break;
-                }
+                // trouve une direction depuis laquel déplacer une case non vide
+                do {
+                    int direction = rng.Next(0, 4);
+                    i1 = i2 - moves[direction][0];
+                    j1 = j2 - moves[direction][1];
+                } while (!this.MakeMove(i1, j1, i2, j2));
 
-                this.MakeMove(i1, j1, i2, j2);
+                // maj du nouvel emplacement de l'espace vide
+                zeros[random] = new int[2] { i1, j1 };
             }
         }
 
