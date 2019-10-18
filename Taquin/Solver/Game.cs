@@ -87,7 +87,7 @@ namespace Solver
             }
         }
 
-        internal int[,] ToGrid()
+        public int[,] ToGrid()
         {
             return this.grid;
         }

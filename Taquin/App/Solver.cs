@@ -24,11 +24,43 @@ namespace App
                 button.ForeColor = Color.White;
                 currentBtnNb = 1;
             }
+
         }
         
         public List<Button> BtnList;
         public Solution.Step selectedNode;
         public int currentBtnNb = 1;
+        public Game importedGame;
+
+        public SolverForm(Game game)
+        {
+            importedGame = game;
+            InitializeComponent();
+            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+            int m = 0;
+            int n = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                if (m > 2)
+                {
+                    m = 0;
+                    n++;
+                }
+                BtnList[i].Text = importedGame.ToGrid()[n, m].ToString();
+                if (BtnList[i].Text == "0")
+                {
+                    BtnList[i].BackColor = Color.White;
+                    BtnList[i].ForeColor = Color.White;
+                    BtnList[i].Text = "0";
+                }
+                else
+                {
+                    BtnList[i].BackColor = Color.DarkGray;
+                    BtnList[i].ForeColor = Color.White;
+                }
+                m++;
+            }
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -47,7 +79,8 @@ namespace App
                 if (BtnList[i].Text == "0")
                 {
                     BtnList[i].BackColor = Color.White;
-                    BtnList[i].Text = "";
+                    BtnList[i].ForeColor = Color.White;
+                    BtnList[i].Text = "0";
                 }
                 else
                 {
