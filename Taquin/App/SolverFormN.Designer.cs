@@ -30,9 +30,9 @@
         {
             this.solvingBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.solverSidePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.gameTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.solutionListBox = new System.Windows.Forms.ListBox();
             this.solveButton = new System.Windows.Forms.Button();
+            this.gameTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.solverSidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,20 +59,6 @@
             this.solverSidePanel.Size = new System.Drawing.Size(120, 261);
             this.solverSidePanel.TabIndex = 0;
             // 
-            // gameTablePanel
-            // 
-            this.gameTablePanel.ColumnCount = 1;
-            this.gameTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.gameTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.gameTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gameTablePanel.Location = new System.Drawing.Point(120, 0);
-            this.gameTablePanel.Name = "gameTablePanel";
-            this.gameTablePanel.RowCount = 1;
-            this.gameTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.gameTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.gameTablePanel.Size = new System.Drawing.Size(164, 261);
-            this.gameTablePanel.TabIndex = 1;
-            // 
             // solutionListBox
             // 
             this.solutionListBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,6 +67,7 @@
             this.solutionListBox.Name = "solutionListBox";
             this.solutionListBox.Size = new System.Drawing.Size(114, 215);
             this.solutionListBox.TabIndex = 0;
+            this.solutionListBox.SelectedIndexChanged += new System.EventHandler(this.solutionListBox_SelectedIndexChanged);
             // 
             // solveButton
             // 
@@ -92,6 +79,20 @@
             this.solveButton.Text = "Résoudre";
             this.solveButton.UseVisualStyleBackColor = true;
             this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
+            // 
+            // gameTablePanel
+            // 
+            this.gameTablePanel.ColumnCount = 1;
+            this.gameTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.gameTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.gameTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameTablePanel.Location = new System.Drawing.Point(120, 0);
+            this.gameTablePanel.Name = "gameTablePanel";
+            this.gameTablePanel.RowCount = 1;
+            this.gameTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.gameTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
+            this.gameTablePanel.Size = new System.Drawing.Size(164, 261);
+            this.gameTablePanel.TabIndex = 1;
             // 
             // SolverFormN
             // 

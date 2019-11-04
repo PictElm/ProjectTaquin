@@ -32,8 +32,12 @@
             this.btn2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gameSizeNum = new System.Windows.Forms.NumericUpDown();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.shuffleMovesNum = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameSizeNum)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shuffleMovesNum)).BeginInit();
             this.SuspendLayout();
             // 
             // btn1
@@ -41,9 +45,9 @@
             this.btn1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn1.Location = new System.Drawing.Point(236, 3);
+            this.btn1.Location = new System.Drawing.Point(225, 3);
             this.btn1.Name = "btn1";
-            this.btn1.Size = new System.Drawing.Size(187, 187);
+            this.btn1.Size = new System.Drawing.Size(176, 187);
             this.btn1.TabIndex = 0;
             this.btn1.Text = "Launch Solver";
             this.btn1.UseVisualStyleBackColor = true;
@@ -56,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn2.Location = new System.Drawing.Point(3, 3);
             this.btn2.Name = "btn2";
-            this.btn2.Size = new System.Drawing.Size(185, 187);
+            this.btn2.Size = new System.Drawing.Size(176, 187);
             this.btn2.TabIndex = 1;
             this.btn2.Text = "Launch Game";
             this.btn2.UseVisualStyleBackColor = true;
@@ -67,13 +71,14 @@
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.btn2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn1, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.gameSizeNum, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -83,22 +88,54 @@
             // 
             // gameSizeNum
             // 
-            this.gameSizeNum.Location = new System.Drawing.Point(194, 3);
+            this.gameSizeNum.Location = new System.Drawing.Point(3, 3);
             this.gameSizeNum.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.gameSizeNum.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
             this.gameSizeNum.Name = "gameSizeNum";
-            this.gameSizeNum.Size = new System.Drawing.Size(36, 20);
+            this.gameSizeNum.Size = new System.Drawing.Size(28, 20);
             this.gameSizeNum.TabIndex = 2;
             this.gameSizeNum.Value = new decimal(new int[] {
             3,
+            0,
+            0,
+            0});
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.gameSizeNum, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.shuffleMovesNum, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(185, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(34, 187);
+            this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // shuffleMovesNum
+            // 
+            this.shuffleMovesNum.Location = new System.Drawing.Point(3, 96);
+            this.shuffleMovesNum.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.shuffleMovesNum.Name = "shuffleMovesNum";
+            this.shuffleMovesNum.Size = new System.Drawing.Size(28, 20);
+            this.shuffleMovesNum.TabIndex = 3;
+            this.shuffleMovesNum.Value = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -113,6 +150,8 @@
             this.Text = "butt";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gameSizeNum)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.shuffleMovesNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -123,5 +162,7 @@
         private System.Windows.Forms.Button btn2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.NumericUpDown gameSizeNum;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.NumericUpDown shuffleMovesNum;
     }
 }

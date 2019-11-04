@@ -15,24 +15,23 @@ namespace App
     {
 
         private Game game;
-        private int gameSize;
 
         private ISolve solver;
 
         private Button[,] buttons;
 
-        public SolverFormN(int size, Game game=null)
+        public SolverFormN(Game game)
         {
+            int size = game.GetSize();
+
             this.InitializeComponent();
 
             this.buttons = new Button[size, size];
             this.InitializeGrid(size);
 
             this.Size = new Size(120 * size + 16 + 120, 120 * size + 39);
-
-            this.gameSize = size;
-            if (game != null)
-                this.SetGame(game);
+            
+            this.SetGame(game);
         }
 
         public void InitializeGrid(int size)
@@ -115,16 +114,17 @@ namespace App
 
         private void solvingBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            int[,] finalGrid = new int[this.gameSize, this.gameSize];
-            int k = 0;
-            for (int i = 0; i < this.gameSize; i++)
-                for (int j = 0; j < this.gameSize; j++)
-                    finalGrid[i, j] = ++k;
+            int[,] finalGrid = new Game(this.game.GetSize(), this.game.CountGaps()).ToGrid();
 
             this.solver = new SolveAEtoile();
             Solution solution = solver.Solve(this.game, finalGrid, state => this.solvingBackgroundWorker.ReportProgress(0, state));
             e.Result = solution;
         }
 
+        private void solutionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Solution.Step selectedNode = (Solution.Step)this.solutionListBox.SelectedItem;
+            this.UpdateGridDisplay(selectedNode.grid);
+        }
     }
 }

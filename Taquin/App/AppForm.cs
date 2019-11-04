@@ -16,6 +16,7 @@ namespace App
 
         private Game game;
         private int size;
+        private int gaps;
 
         private GameFormN launchedGame;
 
@@ -27,9 +28,13 @@ namespace App
         private void btn2_Click(object sender, EventArgs e)
         {
             if (this.size == 0)
+            {
                 this.size = (int)this.gameSizeNum.Value;
+                this.gaps = 1;
+            }
 
-            this.game = new Game(this.size, 6);
+            this.game = new Game(this.size, this.gaps);
+            this.game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
             this.launchedGame = new GameFormN(this.size);
 
             this.launchedGame.SetGame(this.game);
@@ -38,14 +43,14 @@ namespace App
 
         private void btn1_Click(object sender, EventArgs e)
         {
+            if (this.game == null)
+                return;
+
             if (this.size == 0)
                 this.size = (int)this.gameSizeNum.Value;
 
             SolverFormN solvForm;
-            if (this.game != null)
-                solvForm = new SolverFormN(this.size, this.game);
-            else
-                solvForm = new SolverFormN(this.size);
+            solvForm = new SolverFormN(this.game);
             solvForm.Show();
         }
 

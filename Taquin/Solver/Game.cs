@@ -97,6 +97,16 @@ namespace Solver
             return this.grid;
         }
 
+        public int GetSize()
+        {
+            return this.size;
+        }
+
+        public int CountGaps()
+        {
+            return this.gapCount;
+        }
+
         internal int[,] SimulMove(int i1, int j1, int i2, int j2)
         {
             int[,] r = Game.CopyGrid(this.grid);
