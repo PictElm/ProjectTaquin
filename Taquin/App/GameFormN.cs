@@ -33,14 +33,18 @@ namespace App
             }
         }
 
-        public GameFormN(int size)
+        public GameFormN(Game game)
         {
+            int size = game.GetSize();
+
             this.InitializeComponent();
 
             this.buttons = new Button[size, size];
             this.InitializeGrid(size);
             
             this.Size = new Size(120 * size + 16, 120 * size + 39);
+
+            this.SetGame(game);
         }
 
         public void InitializeGrid(int size)

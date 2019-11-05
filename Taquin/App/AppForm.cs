@@ -14,11 +14,23 @@ namespace App
     public partial class AppForm : Form
     {
 
-        private Game game;
         private int size;
         private int gaps;
 
-        private GameFormN launchedGame;
+        private Game _game;
+        public Game Game
+        {
+            get
+            {
+                if (this._game == null)
+                {
+                    this.size = (int)this.gameSizeNum.Value;
+                    this.gaps = (int)this.gapCountNum.Value;
+                    this._game = new Game(this.size, this.gaps);
+                }
+                return this._game;
+            }
+        }
 
         public AppForm()
         {
@@ -27,30 +39,15 @@ namespace App
 
         private void btn2_Click(object sender, EventArgs e)
         {
-            if (this.size == 0)
-            {
-                this.size = (int)this.gameSizeNum.Value;
-                this.gaps = 1;
-            }
+            this.Game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
 
-            this.game = new Game(this.size, this.gaps);
-            this.game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
-            this.launchedGame = new GameFormN(this.size);
-
-            this.launchedGame.SetGame(this.game);
-            this.launchedGame.Show();
+            GameFormN launchedGame = new GameFormN(this.Game);
+            launchedGame.Show();
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            if (this.game == null)
-                return;
-
-            if (this.size == 0)
-                this.size = (int)this.gameSizeNum.Value;
-
-            SolverFormN solvForm;
-            solvForm = new SolverFormN(this.game);
+            SolverFormN solvForm = new SolverFormN(this.Game);
             solvForm.Show();
         }
 

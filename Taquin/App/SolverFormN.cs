@@ -126,5 +126,6 @@ namespace App
             Solution.Step selectedNode = (Solution.Step)this.solutionListBox.SelectedItem;
             this.UpdateGridDisplay(selectedNode.grid);
         }
+
     }
 }

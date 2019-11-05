@@ -10,8 +10,8 @@ namespace Solver
     {
 
         private int[,] grid;
-        private int size;
-        private int gapCount;
+        private readonly int size;
+        private readonly int gapCount;
 
         public Game(int size, int gapCount)
         {
@@ -46,6 +46,14 @@ namespace Solver
             this.grid[i2, j2] = this.grid[i1, j1];
             this.grid[i1, j1] = 0;
             return true;
+        }
+
+        public void Reset()
+        {
+            int k = 1;
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    this.grid[i, j] = k <= size * size - gapCount ? k++ : 0;
         }
         
         public void Shuffle(Random rng, int moveCount)
@@ -163,12 +171,38 @@ namespace Solver
 
         internal static int Heuristics(int[,] fromState, int[,] toState)
         {
+            return Game.Heuristics_DistanceManhattan(fromState, toState);
+        }
+
+        internal static int Heuristics_CountDifferences(int[,] fromState, int[,] toState)
+        {
             int r = 0;
 
             for (int i = 0; i < fromState.GetLength(0); i++)
                 for (int j = 0; j < fromState.GetLength(1); j++)
                     if (fromState[i, j] != toState[i, j])
                         r++;
+
+            return r;
+        }
+
+        internal static int Heuristics_DistanceManhattan(int[,] fromState, int[,] toState)
+        {
+            int r = 0;
+
+            // détermine là où les cases deveraient être
+            int[][] supposed = new int[fromState.GetLength(0) * fromState.GetLength(1)][];
+            for (int k = 0; k < supposed.Length; k++)
+                supposed[k] = new int[2] { k % fromState.GetLength(0), k / fromState.GetLength(1) };
+
+            // calcule la distance de Manhattan pour chaque
+            for (int i = 0; i < fromState.GetLength(0); i++)
+                for (int j = 0; j < fromState.GetLength(1); j++)
+                {
+                    int here = fromState[i, j];
+                    int[] pos = supposed[here];
+                    r += Math.Abs(pos[0] - i) + Math.Abs(pos[1] - j);
+                }
 
             return r;
         }

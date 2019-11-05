@@ -18,7 +18,7 @@ namespace Solver.Tests
             Node parent = new Node(new int[0, 0]);
             Node child = new Node(new int[0, 0]);
 
-            parent.Attach(child);
+            parent.Attach(child, new int[] { 0, 0, 0, 1 });
 
             Assert.AreEqual(parent, child.Parent);
             Assert.AreEqual(parent.MoveCount + 1, child.MoveCount);
