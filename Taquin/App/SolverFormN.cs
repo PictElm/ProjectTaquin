@@ -103,7 +103,11 @@ namespace App
 
         private void solvingBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            this.UpdateGridDisplay(e.UserState as int[,]);
+            var report = e.UserState as Solution.ProgressReportObject;
+
+            this.UpdateGridDisplay(report.state);
+            this.debugLabel.Text = $"o: {report.nbOpened}, c: {report.nbClosed}";
+                                 //$"explored: {report.nbOpened + report.nbClosed}";
         }
 
         private void solvingBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -117,7 +121,7 @@ namespace App
             int[,] finalGrid = new Game(this.game.GetSize(), this.game.CountGaps()).ToGrid();
 
             this.solver = new SolveAEtoile();
-            Solution solution = solver.Solve(this.game, finalGrid, state => this.solvingBackgroundWorker.ReportProgress(0, state));
+            Solution solution = solver.Solve(this.game, finalGrid, report => this.solvingBackgroundWorker.ReportProgress(0, report));
             e.Result = solution;
         }
 

@@ -11,7 +11,7 @@ namespace Solver
 
         private Graph g;
 
-        public Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress)
+        public virtual Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress)
         {
             this.g = new Graph(new Node(game.ToGrid()));
 
@@ -25,8 +25,10 @@ namespace Solver
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
             while (this.g.Opened.Count != 0 && N.ToString() != finalNodeTestString)
             {
+                k++;
                 //if (k++ % 100 == 0)
-                    reportProgress.Invoke(N.ToGrid());
+                if (reportProgress != null)
+                    reportProgress.Invoke(new Solution.ProgressReportObject(N.ToGrid(), g.Opened.Count, g.Closed.Count));
 
                 // Le meilleur noeud des ouverts est supposé placé en tête de liste
                 // On le place dans les fermés

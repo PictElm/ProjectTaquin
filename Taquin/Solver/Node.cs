@@ -62,7 +62,7 @@ namespace Solver
             StringBuilder r = new StringBuilder();
 
             foreach (var a in this.grid)
-                r.Append(a);
+                r.Append(a).Append(", ");
 
             return r.ToString();
         }
@@ -70,6 +70,28 @@ namespace Solver
         internal int[,] ToGrid()
         {
             return this.grid;
+        }
+
+        public static bool operator==(Node a, Node b)
+        {
+            if (Object.Equals(a, null) || Object.Equals(b, null))
+                return Object.Equals(a, b);
+
+            if (a.ToString() == b.ToString())
+                return true;
+
+            int[,] ga = a.ToGrid(), gb = b.ToGrid();
+            for (int i = 0; i < ga.GetLength(0); i++)
+                for (int j = 0; j < ga.GetLength(1); j++)
+                    if (ga[i, j] != gb[i, j] && ga[i, j] != -1 && gb[i, j] != -1)
+                        return false;
+
+            return true;
+        }
+
+        public static bool operator!=(Node a, Node b)
+        {
+            return !(a == b); // TODO: optimizable?
         }
 
     }

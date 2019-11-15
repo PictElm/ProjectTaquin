@@ -9,12 +9,28 @@ namespace Solver
     public interface ISolve
     {
 
-        Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress);
+        Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress=null);
 
     }
 
     public class Solution
     {
+
+        public class ProgressReportObject
+        {
+
+            public int[,] state;
+            public int nbOpened;
+            public int nbClosed;
+
+            public ProgressReportObject(int[,] state, int nbOpened, int nbClosed)
+            {
+                this.state = state;
+                this.nbOpened = nbOpened;
+                this.nbClosed = nbClosed;
+            }
+
+        }
 
         public struct Step
         {
@@ -28,7 +44,7 @@ namespace Solver
                 this.move = move;
             }
 
-            public override string ToString()
+            public override String ToString()
             {
                 if (this.move == null)
                     return "Etat initial";
@@ -46,6 +62,17 @@ namespace Solver
             this.Steps = new List<Step>();
         }
 
+        private Solution(params List<Step>[] manySteps) : this()
+        {
+            foreach (var steps in manySteps)
+                this.Steps.AddRange(steps);
+        }
+
+        public void Reverse()
+        {
+            this.Steps.Reverse();
+        }
+
         public static Solution BuildPathFrom(Graph g)
         {
             Solution r = new Solution();
@@ -60,6 +87,15 @@ namespace Solver
             r.Steps.Reverse();
 
             return r;
+        }
+
+        public static Solution operator+(Solution a, Solution b)
+        {
+            if (a == null)
+                return new Solution(b.Steps);
+            if (b == null)
+                return new Solution(a.Steps);
+            return new Solution(a.Steps, b.Steps);
         }
 
     }

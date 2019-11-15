@@ -171,7 +171,7 @@ namespace Solver
 
         internal static int Heuristics(int[,] fromState, int[,] toState)
         {
-            return Game.Heuristics_DistanceManhattan(fromState, toState);
+            return Game.Heuristics_CountDifferences(fromState, toState);
         }
 
         internal static int Heuristics_CountDifferences(int[,] fromState, int[,] toState)
