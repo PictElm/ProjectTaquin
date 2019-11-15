@@ -15,7 +15,7 @@ namespace Solver
         {
             this.g = new Graph(new Node(game.ToGrid()));
 
-            String finalNodeTestString = new Node(finalState).ToString();
+            Node finalNode = new Node(finalState);
 
             // Le noeud passé en paramètre est supposé être le noeud initial
             Node N = new Node(game.ToGrid());
@@ -23,7 +23,7 @@ namespace Solver
 
             int k = 0;
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
-            while (this.g.Opened.Count != 0 && N.ToString() != finalNodeTestString)
+            while (this.g.Opened.Count != 0 && finalNode != N)
             {
                 k++;
                 //if (k++ % 100 == 0)

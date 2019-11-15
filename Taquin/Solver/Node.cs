@@ -11,6 +11,8 @@ namespace Solver
 
         private int[,] grid;
 
+        private String _testString;
+
         private Node _parent;
         public Node Parent
         {
@@ -50,21 +52,26 @@ namespace Solver
 
         public void Detach(Node child)
         {
-            if (child.Parent == this)
+            if (Object.ReferenceEquals(child.Parent, this))
             {
                 this.children.Remove(child);
                 child.Parent = null;
             }
         }
 
-        public override string ToString()
+        public override String ToString()
         {
-            StringBuilder r = new StringBuilder();
+            if (this._testString == null)
+            {
+                StringBuilder r = new StringBuilder();
 
-            foreach (var a in this.grid)
-                r.Append(a).Append(", ");
+                foreach (var a in this.grid)
+                    r.Append(a).Append(", ");
 
-            return r.ToString();
+                this._testString = r.ToString();
+            }
+
+            return this._testString;
         }
 
         internal int[,] ToGrid()
@@ -74,11 +81,10 @@ namespace Solver
 
         public static bool operator==(Node a, Node b)
         {
-            if (Object.Equals(a, null) || Object.Equals(b, null))
-                return Object.Equals(a, b);
-
-            if (a.ToString() == b.ToString())
-                return true;
+            if (Object.ReferenceEquals(a, b)) return true;
+            if (null == a as Object) return null == b as Object; // TODO: nêe??
+            if (null == b as Object) return null == a as Object;
+            if (a.ToString() == b.ToString()) return true;
 
             int[,] ga = a.ToGrid(), gb = b.ToGrid();
             for (int i = 0; i < ga.GetLength(0); i++)

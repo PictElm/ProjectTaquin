@@ -120,7 +120,7 @@ namespace App
         {
             int[,] finalGrid = new Game(this.game.GetSize(), this.game.CountGaps()).ToGrid();
 
-            this.solver = new SolveAEtoile();
+            this.solver = new SolveEtapes(); //new SolveAEtoile();
             Solution solution = solver.Solve(this.game, finalGrid, report => this.solvingBackgroundWorker.ReportProgress(0, report));
             e.Result = solution;
         }

@@ -24,5 +24,24 @@ namespace Solver.Tests
             Assert.AreEqual(parent.MoveCount + 1, child.MoveCount);
         }
 
+        [TestMethod()]
+        public void EqualsTest()
+        {
+            int[,] g1 = { { 1, 2 }, { 3, 4 } };
+            int[,] g2 = { { 3, 1 }, { 4, 2 } };
+            int[,] gT = { { 1, -1 }, { -1, 4 } };
+
+            Node n1 = new Node(g1);
+            Node n2 = new Node(g2);
+
+            Assert.IsTrue(n1 == new Node(g1));
+            Assert.IsTrue(n1 != n2);
+
+            Node nT = new Node(gT);
+
+            Assert.IsTrue(nT == n1);
+            Assert.IsTrue(nT != n2);
+        }
+
     }
 }

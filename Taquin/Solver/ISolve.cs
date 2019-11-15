@@ -64,8 +64,12 @@ namespace Solver
 
         private Solution(params List<Step>[] manySteps) : this()
         {
+            this.Steps.Add(manySteps[0][0]); // TODO: FIXME: le premier état avec SolveEtapes n'a pas la bonne grille..?
+
             foreach (var steps in manySteps)
-                this.Steps.AddRange(steps);
+                foreach (var step in steps)
+                    if (step.move != null)
+                        this.Steps.Add(step);
         }
 
         public void Reverse()

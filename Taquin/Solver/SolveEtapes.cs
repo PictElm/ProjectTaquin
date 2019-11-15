@@ -15,11 +15,12 @@ namespace Solver
 
             for (int k = 0; k < game.GetSize() * game.GetSize(); k++)
             {
-                var partFinalState = this.BuildSolutionStep(game.GetSize(), k);
+                var partFinalState = this.BuildSolutionStep(finalState, k + 1);
                 Solution partial = base.Solve(game, partFinalState, reportProgress);
 
                 foreach (var step in partial.Steps)
-                    game.MakeMove(step.move[0], step.move[1], step.move[2], step.move[3]);
+                    if (step.move != null)
+                        game.MakeMove(step.move[0], step.move[1], step.move[2], step.move[3]);
 
                 r += partial;
             }
@@ -27,13 +28,15 @@ namespace Solver
             return r;
         }
 
-        internal int[,] BuildSolutionStep(int size, int n)
+        internal int[,] BuildSolutionStep(int[,] targetState, int n)
         {
-            int[,] r = new int[size, size];
+            int[,] r = new int[targetState.GetLength(0), targetState.GetLength(1)];
 
-            for (int k = 1, i = 0; i < size; i++)
-                for (int j = 0; j < size; r[i, j++] = k < n ? k++ : -1)
-                    ;
+            for (int k = 0, i = 0; i < targetState.GetLength(0); i++)
+                for (int j = 0; j < targetState.GetLength(1); j++)
+                    r[i, j] = k++ < n ? targetState[i, j] : -1;
+
+            var da = new Node(r);
 
             return r;
         }

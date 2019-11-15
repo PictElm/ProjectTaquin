@@ -25,40 +25,20 @@ namespace Solver
 
         public Node FindIfExist(int[,] grid)
         {
-            String test = new Node(grid).ToString();
-
-            foreach (var node in this.Opened)
-                if (node.ToString() == test)
-                    return node;
-
-            foreach (var node in this.Closed)
-                if (node.ToString() == test)
-                    return node;
-
-            return null;
+            return this.FindIfExist(new Node(grid));
         }
 
         public Node FindIfExist(Node n)
         {
-            String test = n.ToString();
-
-            foreach (var node in this.Opened)
-                if (node.ToString() == test)
-                    return node;
-
-            foreach (var node in this.Closed)
-                if (node.ToString() == test)
-                    return node;
-
-            return null;
+            if (this.Closed.Count < this.Opened.Count)
+                return this.FindIfExistInClosed(n) ?? this.FindIfExistInOpened(n);
+            return this.FindIfExistInOpened(n) ?? this.FindIfExistInClosed(n);
         }
 
         public Node FindIfExistInOpened(Node n)
         {
-            String test = n.ToString();
-
             foreach (var node in this.Opened)
-                if (node.ToString() == test)
+                if (n == node)
                     return node;
 
             return null;
@@ -66,10 +46,8 @@ namespace Solver
 
         public Node FindIfExistInClosed(Node n)
         {
-            String test = n.ToString();
-
             foreach (var node in this.Closed)
-                if (node.ToString() == test)
+                if (n == node)
                     return node;
 
             return null;
