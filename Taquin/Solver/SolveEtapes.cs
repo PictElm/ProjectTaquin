@@ -28,6 +28,12 @@ namespace Solver
             return r;
         }
 
+        /// <summary>
+        /// Génère la grille de l'étape <paramref name="n"/>.
+        /// </summary>
+        /// <param name="targetState">Etat final ciblé.</param>
+        /// <param name="n">Numéro de l'étape.</param>
+        /// <returns></returns>
         internal int[,] BuildSolutionStep(int[,] targetState, int n)
         {
             int[,] r = new int[targetState.GetLength(0), targetState.GetLength(1)];

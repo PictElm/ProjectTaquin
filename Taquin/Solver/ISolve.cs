@@ -9,6 +9,15 @@ namespace Solver
     public interface ISolve
     {
 
+        /// <summary>
+        /// Résout le jeu (<paramref name="game"/>) depuis son état actuel jusqu'à l'état final
+        /// (<paramref name="finalState"/>).
+        /// </summary>
+        /// <param name="game">Jeu à résoudre, dans son état initial (e.g. mélangé).</param>
+        /// <param name="finalState">Etat final à atteindre.</param>
+        /// <param name="reportProgress">Action optionnelle prennant un <see cref="Solution.ProgressReportObject"/>
+        /// en paramètre, tennant à jours de l'avencement de la résolution.</param>
+        /// <returns></returns>
         Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress=null);
 
     }
@@ -16,6 +25,11 @@ namespace Solver
     public class Solution
     {
 
+        /// <summary>
+        /// "Structure" comprenant un compte rendu de l'état de la résolution avec : une grille
+        /// représentant l'état de jeu (à voir selon l'algorithme), le nombre d'états visité et le nombre d'état
+        /// prévus d'être visité.
+        /// </summary>
         public class ProgressReportObject
         {
 
@@ -32,6 +46,10 @@ namespace Solver
 
         }
 
+        /// <summary>
+        /// Structure comprenant l'état du jeux ainsi que le mouvement y mennant
+        /// (depuis l'état précedent dans <see cref="Solution.Steps"/>).
+        /// </summary>
         public struct Step
         {
 
@@ -55,6 +73,9 @@ namespace Solver
 
         }
 
+        /// <summary>
+        /// Liste des étapes à suivre pour suivre la solution. Voir aussi : <seealso cref="Solution.Step"/>.
+        /// </summary>
         public List<Step> Steps { get; private set; }
 
         private Solution()
@@ -64,7 +85,7 @@ namespace Solver
 
         private Solution(params List<Step>[] manySteps) : this()
         {
-            this.Steps.Add(manySteps[0][0]); // TODO: FIXME: le premier état avec SolveEtapes n'a pas la bonne grille..?
+            this.Steps.Add(manySteps[0][0]); // TODO: FIXME: le premier état avec SolveEtapes n'a pas la bonne grille.?
 
             foreach (var steps in manySteps)
                 foreach (var step in steps)
@@ -72,12 +93,24 @@ namespace Solver
                         this.Steps.Add(step);
         }
 
+        /// <summary>
+        /// Retourne la liste des étapes (<see cref="Solution.Steps"/>) de résolution de cette solution.
+        /// </summary>
         public void Reverse()
         {
             this.Steps.Reverse();
         }
 
-        public static Solution BuildPathFrom(Graph g)
+        /// <summary>
+        /// Construit le chemin menant à <code>g.GetFinal</code> en remontant la génialogie
+        /// (en faisant <code>current = current.Parent</code>). <paramref name="reversed"/> permet
+        /// de préciser si le résultat devrait être inversé.
+        /// </summary>
+        /// <param name="g"><see cref="Graph"/> des neuds.</param>
+        /// <param name="reversed"><code>true</code> si le résultat devrait être inversé (par
+        /// exemple resolution depuis la fin).</param>
+        /// <returns></returns>
+        public static Solution BuildPathFrom(Graph g, bool reversed=false)
         {
             Solution r = new Solution();
             Node current = g.GetFinal();
@@ -88,11 +121,20 @@ namespace Solver
                 current = current.Parent;
             }
 
-            r.Steps.Reverse();
+            if (!reversed)
+                r.Steps.Reverse();
 
             return r;
         }
 
+        /// <summary>
+        /// Ajoute les étapes de la solution <paramref name="b"/> à la suite des étapes de la solution
+        /// <paramref name="a"/>. Retourn un nouvel élément.
+        /// L'élément nul par l'addition est la solution <code>null</code>.
+        /// </summary>
+        /// <param name="a">Premières étapes.</param>
+        /// <param name="b">Dernières étapes.</param>
+        /// <returns></returns>
         public static Solution operator+(Solution a, Solution b)
         {
             if (a == null)
