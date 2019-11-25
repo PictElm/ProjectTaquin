@@ -16,8 +16,8 @@ namespace App
         public SolverForm()
         {
             InitializeComponent();
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
-            foreach (Button button in BtnList)
+            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+            foreach (Button button in btnList)
             {
                 button.Text = "0";
                 button.BackColor = Color.White;
@@ -27,7 +27,7 @@ namespace App
 
         }
         
-        public List<Button> BtnList;
+        public List<Button> btnList;
         public Solution.Step selectedNode;
         public int currentBtnNb = 1;
         public Game importedGame;
@@ -36,7 +36,7 @@ namespace App
         {
             importedGame = game;
             InitializeComponent();
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
             int m = 0;
             int n = 0;
             for (int i = 0; i < 9; i++)
@@ -46,17 +46,17 @@ namespace App
                     m = 0;
                     n++;
                 }
-                BtnList[i].Text = importedGame.ToGrid()[n, m].ToString();
-                if (BtnList[i].Text == "0")
+                btnList[i].Text = importedGame.ToGrid()[n, m].ToString();
+                if (btnList[i].Text == "0")
                 {
-                    BtnList[i].BackColor = Color.White;
-                    BtnList[i].ForeColor = Color.White;
-                    BtnList[i].Text = "0";
+                    btnList[i].BackColor = Color.White;
+                    btnList[i].ForeColor = Color.White;
+                    btnList[i].Text = "0";
                 }
                 else
                 {
-                    BtnList[i].BackColor = Color.DarkGray;
-                    BtnList[i].ForeColor = Color.White;
+                    btnList[i].BackColor = Color.DarkGray;
+                    btnList[i].ForeColor = Color.White;
                 }
                 m++;
             }
@@ -64,10 +64,8 @@ namespace App
 
         private ISolve solver;
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateGridDisplay(int[,] grid)
         {
-            selectedNode = (Solution.Step) lb1.SelectedItem;
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
             int m = 0;
             int n = 0;
             for (int i = 0; i < 9; i++)
@@ -77,23 +75,55 @@ namespace App
                     m = 0;
                     n++;
                 }
-                BtnList[i].Text = selectedNode.grid[n, m].ToString();
-                if (BtnList[i].Text == "0")
+                btnList[i].Text = grid[n, m].ToString();
+                if (btnList[i].Text == "0")
                 {
-                    BtnList[i].BackColor = Color.White;
-                    BtnList[i].ForeColor = Color.White;
-                    BtnList[i].Text = "0";
+                    btnList[i].BackColor = Color.White;
+                    btnList[i].ForeColor = Color.White;
+                    btnList[i].Text = "0";
                 }
                 else
                 {
-                    BtnList[i].BackColor = Color.DarkGray;
-                    BtnList[i].ForeColor = Color.White;
+                    btnList[i].BackColor = Color.DarkGray;
+                    btnList[i].ForeColor = Color.White;
                 }
                 m++;
             }
         }
 
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedNode = (Solution.Step) lb1.SelectedItem;
+            this.UpdateGridDisplay(selectedNode.grid);
+        }
+
         private void button1_Click(object sender, EventArgs e)
+        {
+            this.solvingBackgroundWorker.RunWorkerAsync();
+            System.Diagnostics.Debug.WriteLine("Started background solving");
+        }
+
+        private void SolverForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.solvingBackgroundWorker.IsBusy)
+            {
+                this.solvingBackgroundWorker.CancelAsync();
+                System.Diagnostics.Debug.WriteLine("Canceled background solving");
+            }
+        }
+
+        private void solvingBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.UpdateGridDisplay(e.UserState as int[,]);
+        }
+
+        private void solvingBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Finished background solving");
+            lb1.DataSource = (e.Result as Solution).Steps;
+        }
+
+        private void solvingBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             int[,] currentGrid = { { int.Parse(btn1.Text), int.Parse(btn2.Text), int.Parse(btn3.Text) }, 
                 { int.Parse(btn4.Text), int.Parse(btn5.Text), int.Parse(btn6.Text) }, 
@@ -105,10 +135,9 @@ namespace App
             newGame.LoadGrid(currentGrid); // état initial
             int[,] finalGrid = getFinalGrid(3, gapCount); // état final
 
-            solver = new Solve3();
-            Solution solution = solver.Solve(newGame, finalGrid);
-            lb1.DataSource = solution.Steps;
-
+            solver = new SolveAEtoile();
+            Solution solution = solver.Solve(newGame, finalGrid, state => this.solvingBackgroundWorker.ReportProgress(0, state));
+            e.Result = solution;
         }
 
         private void btn1_Click(object sender, EventArgs e)
@@ -212,8 +241,8 @@ namespace App
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            BtnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
-            foreach (Button button in BtnList)
+            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+            foreach (Button button in btnList)
             {
                 button.Text = "0";
                 button.BackColor = Color.White;

@@ -13,54 +13,43 @@ namespace App
 {
     public partial class AppForm : Form
     {
-        public AppForm()
+
+        private int size;
+        private int gaps;
+
+        private Game _game;
+        public Game Game
         {
-            InitializeComponent();
+            get
+            {
+                if (this._game == null)
+                {
+                    this.size = (int)this.gameSizeNum.Value;
+                    this.gaps = (int)this.gapCountNum.Value;
+                    this._game = new Game(this.size, this.gaps);
+                }
+                return this._game;
+            }
         }
 
-        private AGameForm launchedGame;
-        public Game newGame;  // = new Game(3, 2);
-        private int sizeChoice = 3;
+        public AppForm()
+        {
+            this.InitializeComponent();
+        }
 
         private void btn2_Click(object sender, EventArgs e)
         {
-            if (sizeChoice == 3)
-                launchedGame = new GameForm();
-            else if (sizeChoice == 5)
-                launchedGame = new GameForm5();
-            newGame = new Game(sizeChoice, 2);
-            launchedGame.SetGame(newGame);
+            this.Game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
+
+            GameFormN launchedGame = new GameFormN(this.Game);
             launchedGame.Show();
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            SolverForm solvForm;
-            if (launchedGame != null)
-                solvForm = new SolverForm(newGame);
-            else
-                solvForm = new SolverForm();
+            SolverFormN solvForm = new SolverFormN(this.Game);
             solvForm.Show();
         }
 
-        private void btnSize3_Click(object sender, EventArgs e)
-        {
-            sizeChoice = 3;
-            btnSize3.BackColor = Color.DarkGray;
-            btnSize3.ForeColor = Color.White;
-
-            btnSize5.BackColor = Color.LightGray;
-            btnSize5.ForeColor = Color.Black;
-        }
-
-        private void btnSize5_Click(object sender, EventArgs e)
-        {
-            sizeChoice = 5;
-            btnSize5.BackColor = Color.DarkGray;
-            btnSize5.ForeColor = Color.White;
-
-            btnSize3.BackColor = Color.LightGray;
-            btnSize3.ForeColor = Color.Black;
-        }
     }
 }
