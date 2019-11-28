@@ -49,7 +49,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn1.Location = new System.Drawing.Point(280, 3);
             this.btn1.Name = "btn1";
-            this.btn1.Size = new System.Drawing.Size(187, 148);
+            this.btn1.Size = new System.Drawing.Size(187, 187);
             this.btn1.TabIndex = 0;
             this.btn1.Text = "Launch Solver";
             this.btn1.UseVisualStyleBackColor = true;
@@ -122,7 +122,7 @@
             this.gameSizeNum.Size = new System.Drawing.Size(73, 20);
             this.gameSizeNum.TabIndex = 2;
             this.gameSizeNum.Value = new decimal(new int[] {
-            3,
+            4,
             0,
             0,
             0});
@@ -131,8 +131,8 @@
             // 
             this.shuffleMovesNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.shuffleMovesNum.Location = new System.Drawing.Point(3, 83);
-            this.shuffleMovesNum.Minimum = new decimal(new int[] {
-            1,
+            this.shuffleMovesNum.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
@@ -140,7 +140,7 @@
             this.shuffleMovesNum.Size = new System.Drawing.Size(73, 20);
             this.shuffleMovesNum.TabIndex = 3;
             this.shuffleMovesNum.Value = new decimal(new int[] {
-            10,
+            50,
             0,
             0,
             0});
@@ -182,7 +182,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.shuffleMovesNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gapCountNum)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

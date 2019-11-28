@@ -38,6 +38,10 @@ namespace Solver
             this.LoadGrid(gridFrom);
         }
 
+        public Game(Game copy) : this(copy.grid)
+        {
+        }
+
         /// <summary>
         /// Retourne la valeur sur la case dans la grille du jeu.
         /// </summary>
@@ -84,6 +88,22 @@ namespace Solver
             this.grid[i2, j2] = this.grid[i1, j1];
             this.grid[i1, j1] = 0;
             return true;
+        }
+
+        /// <summary>
+        /// Applique la suite de mouvements en utilisant <see cref="Game.MakeMove(int, int, int, int)"/> pour chaque
+        /// élements de <paramref name="moves"/>. Retourn le nombre de mouvements qui on pus être effectué.
+        /// </summary>
+        /// <param name="moves">int[nb de mouvements][4]</param>
+        /// <returns></returns>
+        public int MakeMoves(int[][] moves)
+        {
+            if (moves.Length == 0) return 0;
+
+            int k = 0;
+            while ((moves[k] == null || this.MakeMove(moves[k][0], moves[k][1], moves[k][2], moves[k][3])) && k++ < moves.Length - 1)
+                ;
+            return k;
         }
 
         /// <summary>
@@ -166,7 +186,8 @@ namespace Solver
         /// <returns></returns>
         public int[,] ToGrid()
         {
-            return this.grid;
+            //return this.grid;
+            return Game.CopyGrid(this.grid);
         }
         
         public int GetSize()

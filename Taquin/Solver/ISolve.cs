@@ -102,6 +102,20 @@ namespace Solver
         }
 
         /// <summary>
+        /// Retourne les mouvements sous un format utilisable par <see cref="Game.MakeMoves(int[][])"/>.
+        /// </summary>
+        /// <returns>int[nb de mouvements][4]</returns>
+        public int[][] GetMoves()
+        {
+            int[][] r = new int[this.Steps.Count][];
+
+            for (int k = 0; k < r.Length; k++)
+                r[k] = this.Steps[k].move;
+
+            return r;
+        }
+
+        /// <summary>
         /// Construit le chemin menant à <code>g.GetFinal</code> en remontant la génialogie
         /// (en faisant <code>current = current.Parent</code>). <paramref name="reversed"/> permet
         /// de préciser si le résultat devrait être inversé.
@@ -138,9 +152,9 @@ namespace Solver
         public static Solution operator+(Solution a, Solution b)
         {
             if (a == null)
-                return new Solution(b.Steps);
+                return b.Steps.Count == 0 ? null : new Solution(b.Steps);
             if (b == null)
-                return new Solution(a.Steps);
+                return a.Steps.Count == 0 ? null : new Solution(a.Steps);
             return new Solution(a.Steps, b.Steps);
         }
 

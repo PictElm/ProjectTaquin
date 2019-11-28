@@ -11,7 +11,7 @@ namespace Solver
 
         private Graph g;
 
-        public virtual Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress)
+        public virtual Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress=null)
         {
             this.g = new Graph(new Node(game.ToGrid()));
 
@@ -63,6 +63,7 @@ namespace Solver
             foreach (int[] move in listsucc)
             {
                 Node N2 = new Node(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
+
                 // N2 est-il une copie d'un nœud déjà vu et placé dans la liste des fermés ?
                 Node N2bis = g.FindIfExistInClosed(N2);
                 if (N2bis == null)
