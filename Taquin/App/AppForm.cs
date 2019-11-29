@@ -47,7 +47,9 @@ namespace App
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            SolverFormN solvForm = new SolverFormN(this.Game);
+            this.Game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
+
+            SolverFormN solvForm = new SolverFormN();
             solvForm.Show();
         }
 

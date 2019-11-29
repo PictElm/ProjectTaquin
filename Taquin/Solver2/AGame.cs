@@ -11,5 +11,9 @@ namespace Solver2
 
         public abstract Graph.INode<T_Move> State { get; set; }
 
+        public abstract List<T_Node> NextNodes(T_Node from, Func<T_Node, bool> filter = null);
+
+        public abstract bool MakeMove(T_Move move);
+
     }
 }

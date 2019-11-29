@@ -9,23 +9,25 @@ namespace Solver2.Solve.Method
     public class AEtoile<T_Node, T_Move> : ISolve<T_Node, T_Move> where T_Node : class, Graph.INode<T_Move>
     {
 
-        private Graph.Graph<T_Node, T_Move> g;
+        private Graph.Graph<T_Node, T_Move> graph;
+        private AGame<T_Node, T_Move> game;
 
         public Solution<T_Node, T_Move> Solve(AGame<T_Node, T_Move> game, T_Node finalState)
         {
-            this.g = new Graph.Graph<T_Node, T_Move>(game.State as T_Node);
+            this.graph = new Graph.Graph<T_Node, T_Move>(game.State as T_Node);
+            this.game = game; //as AGame<Graph.INode<T_Move>, T_Move>;
 
             // Le noeud passé en paramètre est supposé être le noeud initial
             T_Node N = game.State as T_Node;
-            this.g.Opened.Add(N);
+            this.graph.Opened.Add(N);
             
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
-            while (this.g.Opened.Count != 0 && finalState != N)
+            while (this.graph.Opened.Count != 0 && !finalState.SameAs(N))
             {
                 // Le meilleur noeud des ouverts est supposé placé en tête de liste
                 // On le place dans les fermés
-                this.g.Opened.Remove(N);
-                this.g.Closed.Add(N);
+                this.graph.Opened.Remove(N);
+                this.graph.Closed.Add(N);
 
                 // Il faut trouver les noeuds successeurs de N
                 this.UpdateSuccessors(N, finalState);
@@ -33,9 +35,9 @@ namespace Solver2.Solve.Method
 
                 // On prend le meilleur, donc celui en position 0, pour continuer à explorer les états
                 // A condition qu'il existe bien sûr
-                if (this.g.Opened.Count > 0)
+                if (this.graph.Opened.Count > 0)
                 {
-                    N = this.g.Opened[0];
+                    N = this.graph.Opened[0];
                 }
                 else
                 {
@@ -43,8 +45,8 @@ namespace Solver2.Solve.Method
                 }
             }
 
-            g.Finish(N);
-            return Solution<T_Node, T_Move>.BuildPathFrom(this.g);
+            graph.Finish(N);
+            return Solution<T_Node, T_Move>.BuildPathFrom(this.graph);
         }
 
 
@@ -53,17 +55,17 @@ namespace Solver2.Solve.Method
             // On fait appel à GetListSucc, méthode abstraite qu'on doit réécrire pour chaque
             // problème. Elle doit retourner la liste complète des noeuds successeurs de N.
             //List<int[]> listsucc = Game.NextSteps(N.ToGrid());
-            foreach (T_Node N2 in N.Nexts())
+            foreach (T_Node N2 in this.game.NextNodes(N))
             {
                 //T_Node N2 = new T_Node(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
                 //T_Node N2 = N.Next(move);
 
                 // N2 est-il une copie d'un nœud déjà vu et placé dans la liste des fermés ?
-                T_Node N2bis = g.FindIfExistInClosed(N2);
+                T_Node N2bis = graph.FindIfExistInClosed(N2);
                 if (N2bis == null)
                 {
                     // Rien dans les fermés. Est-il dans les ouverts ?
-                    N2bis = g.FindIfExistInOpened(N2);
+                    N2bis = graph.FindIfExistInOpened(N2);
                     if (N2bis != null)
                     {
                         // Il existe, donc on l'a déjà vu, N2 n'est qu'une copie de N2Bis
@@ -79,7 +81,7 @@ namespace Solver2.Solve.Method
                             N.Attach(N2bis, N2.MoveFromParent);
 
                             // Mise à jour des ouverts
-                            g.Opened.Remove(N2bis);
+                            graph.Opened.Remove(N2bis);
                             this.InsertNewNodeInOpenList(N2bis);
                         }
                         // else on ne fait rien, car le nouveau chemin est moins bon
@@ -107,33 +109,33 @@ namespace Solver2.Solve.Method
         public void InsertNewNodeInOpenList(T_Node newNode)
         {
             // Insertion pour respecter l'ordre du cout total le plus petit au plus grand
-            if (this.g.Opened.Count == 0)
+            if (this.graph.Opened.Count == 0)
             {
-                this.g.Opened.Add(newNode);
+                this.graph.Opened.Add(newNode);
             }
             else
             {
-                T_Node N = this.g.Opened[0];
+                T_Node N = this.graph.Opened[0];
                 bool trouve = false;
                 int i = 0;
                 do
                 {
                     if (newNode.TotalCost < N.TotalCost)
                     {
-                        this.g.Opened.Insert(i, newNode);
+                        this.graph.Opened.Insert(i, newNode);
                         trouve = true;
                     }
                     else
                     {
                         i++;
-                        if (this.g.Opened.Count == i)
+                        if (this.graph.Opened.Count == i)
                         {
                             N = null;
-                            this.g.Opened.Insert(i, newNode);
+                            this.graph.Opened.Insert(i, newNode);
                         }
                         else
                         {
-                            N = this.g.Opened[i];
+                            N = this.graph.Opened[i];
                         }
                     }
                 } while ((N != null) && (trouve == false));
