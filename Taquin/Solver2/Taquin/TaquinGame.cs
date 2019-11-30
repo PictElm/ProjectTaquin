@@ -7,7 +7,7 @@ using Solver2.Graph;
 
 namespace Solver2.Taquin
 {
-    public class TaquinGame : AGame<TaquinNode, TaquinGame.Move>
+    public class TaquinGame : AGame<TaquinGame.Move>
     {
 
         public struct Move
@@ -58,9 +58,7 @@ namespace Solver2.Taquin
             get { return this._grid; }
             set
             {
-                if (this._grid == null)
-                    this._grid = new int[this.Size, this.Size];
-
+                this._grid = new int[this.Size, this.Size];
                 for (int i = 0; i < this.Size; i++)
                     for (int j = 0; j < this.Size; j++)
                         this._grid[i, j] = value[i, j];
@@ -96,10 +94,10 @@ namespace Solver2.Taquin
             return r;
         }
 
-        public override List<TaquinNode> NextNodes(TaquinNode from, Func<TaquinNode, bool> filter = null)
+        public override List<INode<Move>> NextNodes(INode<Move> from, Func<INode<Move>, bool> filter = null)
         {
-            var r = new List<TaquinNode>();
-            var grid = from.Grid;
+            var r = new List<INode<Move>>();
+            var grid = (from as TaquinNode).Grid;
 
             // liste les coordonées des espaces vides
             List<int[]> zeros = new List<int[]>();

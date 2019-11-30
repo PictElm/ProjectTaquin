@@ -14,7 +14,7 @@ namespace App
     {
 
         private Solver2.Taquin.TaquinGame game;
-        private Solver2.Solve.ISolve<Solver2.Taquin.TaquinNode, Solver2.Taquin.TaquinGame.Move> solver;
+        private Solver2.Solve.ISolve<Solver2.Taquin.TaquinGame.Move> solver;
         private Random rng;
 
         private Button[,] buttons;
@@ -190,14 +190,14 @@ namespace App
         {
             System.Diagnostics.Debug.WriteLine("Finished background solving");
             this.InputEnabled = true;
-            this.solutionListBox.DataSource = (e.Result as Solver2.Solve.Solution<Solver2.Taquin.TaquinNode, Solver2.Taquin.TaquinGame.Move>).Steps;
+            this.solutionListBox.DataSource = (e.Result as Solver2.Solve.Solution<Solver2.Taquin.TaquinGame.Move>).Steps;
         }
 
         private void solvingBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             int[,] finalGrid = Solver2.Taquin.TaquinGame.SortedGrid(this.game.Size, this.game.Gaps);
 
-            this.solver = new Solver2.Solve.Method.AEtoile<Solver2.Taquin.TaquinNode, Solver2.Taquin.TaquinGame.Move>();
+            this.solver = new Solver2.Solve.Method.SolveAEtoile<Solver2.Taquin.TaquinGame.Move>();
             var solution = solver.Solve(this.game, new Solver2.Taquin.TaquinNode(finalGrid));
             e.Result = solution;
         }

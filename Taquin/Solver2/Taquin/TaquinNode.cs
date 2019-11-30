@@ -50,7 +50,7 @@ namespace Solver2.Taquin
             }
         }
 
-        public TaquinNode(int[,] grid)
+        public TaquinNode(int[,] grid = null)
         {
             this.Grid = grid;
             this.Parent = null;
@@ -61,8 +61,6 @@ namespace Solver2.Taquin
         {
             this.MoveFromParent = moveFromParent;
         }
-
-        public TaquinNode() : this(null) { }
 
         public void Attach(INode<TaquinGame.Move> child, TaquinGame.Move moveFromParentToChild)
         {
@@ -75,7 +73,7 @@ namespace Solver2.Taquin
             return 0;
         }
         
-        public List<INode<TaquinGame.Move>> Nexts(AGame<INode<TaquinGame.Move>, TaquinGame.Move> gameRef, INode<TaquinGame.Move> restrMustMatch = null)
+        public List<INode<TaquinGame.Move>> Nexts(AGame<TaquinGame.Move> gameRef, INode<TaquinGame.Move> restrMustMatch = null)
         {
             if (restrMustMatch == null)
                 return gameRef.NextNodes(this);

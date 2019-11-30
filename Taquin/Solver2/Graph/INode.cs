@@ -16,7 +16,7 @@ namespace Solver2.Graph
         bool SameAs(INode<T_Move> mate);
         String ToString();
 
-        List<INode<T_Move>> Nexts(AGame<INode<T_Move>, T_Move> gameRef, INode<T_Move> restrMustMatch = null);
+        List<INode<T_Move>> Nexts(AGame<T_Move> gameRef, INode<T_Move> restrMustMatch = null);
         int Heuristics(INode<T_Move> final);
         void Attach(INode<T_Move> child, T_Move moveFromParentToChild);
 

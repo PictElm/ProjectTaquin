@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Solver2.Solve.Method
 {
-    public class AEtoile<T_Node, T_Move> : ISolve<T_Node, T_Move> where T_Node : class, Graph.INode<T_Move>
+    public class SolveAEtoile<T_Move> : ISolve<T_Move>
     {
 
-        private Graph.Graph<T_Node, T_Move> graph;
-        private AGame<T_Node, T_Move> game;
+        private Graph.Graph<T_Move> graph;
+        private AGame<T_Move> game;
 
-        public Solution<T_Node, T_Move> Solve(AGame<T_Node, T_Move> game, T_Node finalState)
+        public Solution<T_Move> Solve(AGame<T_Move> game, Graph.INode<T_Move> finalState)
         {
-            this.graph = new Graph.Graph<T_Node, T_Move>(game.State as T_Node);
+            this.graph = new Graph.Graph<T_Move>(game.State);
             this.game = game; //as AGame<Graph.INode<T_Move>, T_Move>;
 
             // Le noeud passé en paramètre est supposé être le noeud initial
-            T_Node N = game.State as T_Node;
+            var N = game.State;
             this.graph.Opened.Add(N);
             
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
@@ -45,23 +45,23 @@ namespace Solver2.Solve.Method
                 }
             }
 
-            graph.Finish(N);
-            return Solution<T_Node, T_Move>.BuildPathFrom(this.graph);
+            this.graph.Finish(N);
+            return Solution<T_Move>.BuildPathFrom(this.graph);
         }
 
 
-        public void UpdateSuccessors(T_Node N, T_Node finalState)
+        public void UpdateSuccessors(Graph.INode<T_Move> N, Graph.INode<T_Move> finalState)
         {
             // On fait appel à GetListSucc, méthode abstraite qu'on doit réécrire pour chaque
             // problème. Elle doit retourner la liste complète des noeuds successeurs de N.
             //List<int[]> listsucc = Game.NextSteps(N.ToGrid());
-            foreach (T_Node N2 in this.game.NextNodes(N))
+            foreach (var N2 in this.game.NextNodes(N))
             {
-                //T_Node N2 = new T_Node(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
-                //T_Node N2 = N.Next(move);
+                //INode<T_Move> N2 = new INode<T_Move>(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
+                //INode<T_Move> N2 = N.Next(move);
 
                 // N2 est-il une copie d'un nœud déjà vu et placé dans la liste des fermés ?
-                T_Node N2bis = graph.FindIfExistInClosed(N2);
+                var N2bis = graph.FindIfExistInClosed(N2);
                 if (N2bis == null)
                 {
                     // Rien dans les fermés. Est-il dans les ouverts ?
@@ -106,7 +106,7 @@ namespace Solver2.Solve.Method
             }
         }
 
-        public void InsertNewNodeInOpenList(T_Node newNode)
+        public void InsertNewNodeInOpenList(Graph.INode<T_Move> newNode)
         {
             // Insertion pour respecter l'ordre du cout total le plus petit au plus grand
             if (this.graph.Opened.Count == 0)
@@ -115,7 +115,7 @@ namespace Solver2.Solve.Method
             }
             else
             {
-                T_Node N = this.graph.Opened[0];
+                var N = this.graph.Opened[0];
                 bool trouve = false;
                 int i = 0;
                 do

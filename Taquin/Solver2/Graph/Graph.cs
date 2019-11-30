@@ -2,31 +2,31 @@
 
 namespace Solver2.Graph
 {
-    public class Graph<T_Node, T_Move> where T_Node : class, INode<T_Move>
+    public class Graph<T_Move>
     {
 
-        private T_Node init;
-        private T_Node final;
+        private INode<T_Move> init;
+        private INode<T_Move> final;
 
-        public List<T_Node> Opened { get; private set; }
-        public List<T_Node> Closed { get; private set; }
+        public List<INode<T_Move>> Opened { get; private set; }
+        public List<INode<T_Move>> Closed { get; private set; }
 
-        public Graph(T_Node init)
+        public Graph(INode<T_Move> init)
         {
             this.init = init;
 
-            this.Opened = new List<T_Node>();
-            this.Closed = new List<T_Node>();
+            this.Opened = new List<INode<T_Move>>();
+            this.Closed = new List<INode<T_Move>>();
         }
 
-        public T_Node FindIfExist(T_Node n)
+        public INode<T_Move> FindIfExist(INode<T_Move> n)
         {
             if (this.Closed.Count < this.Opened.Count)
                 return this.FindIfExistInClosed(n) ?? this.FindIfExistInOpened(n);
             return this.FindIfExistInOpened(n) ?? this.FindIfExistInClosed(n);
         }
 
-        public T_Node FindIfExistInOpened(T_Node n)
+        public INode<T_Move> FindIfExistInOpened(INode<T_Move> n)
         {
             foreach (var node in this.Opened)
                 if (n.SameAs(node))
@@ -35,7 +35,7 @@ namespace Solver2.Graph
             return null;
         }
 
-        public T_Node FindIfExistInClosed(T_Node n)
+        public INode<T_Move> FindIfExistInClosed(INode<T_Move> n)
         {
             foreach (var node in this.Closed)
                 if (n.SameAs(node))
@@ -44,12 +44,12 @@ namespace Solver2.Graph
             return null;
         }
 
-        public void Finish(T_Node final)
+        public void Finish(INode<T_Move> final)
         {
             this.final = final;
         }
 
-        public T_Node GetFinal()
+        public INode<T_Move> GetFinal()
         {
             return this.final;
         }
