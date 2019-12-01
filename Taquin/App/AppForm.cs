@@ -49,7 +49,7 @@ namespace App
         {
             this.Game.Shuffle(new Random(), (int)this.shuffleMovesNum.Value);
 
-            SolverFormN solvForm = new SolverFormN();
+            SolverFormN solvForm = new SolverFormN((int)this.gameSizeNum.Value, (int)this.gapCountNum.Value);
             solvForm.Show();
         }
 

@@ -42,11 +42,12 @@
   <ItemGroup>
     <Compile Include="AGame.cs" />
     <Compile Include="Solve\ISolve.cs" />
+    <Compile Include="Solve\Method\ASolveEtapes.cs" />
     <Compile Include="Solve\Method\SolveAEtoile.cs" />
     <Compile Include="Solve\Solution.cs" />
     <Compile Include="Taquin\TaquinGame.cs" />
     <Compile Include="Graph\Graph.cs" />
-    <Compile Include="Graph\INode.cs" />
+    <Compile Include="Graph\ANode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Taquin\TaquinNode.cs" />
   </ItemGroup>

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Solver2.Graph;
 
 namespace Solver2.Solve.Method
 {
-    public class SolveAEtoile<T_Move> : ISolve<T_Move>
+    public class SolveAEtoile<TMove> : ISolve<TMove>
     {
 
-        private Graph.Graph<T_Move> graph;
-        private AGame<T_Move> game;
+        private Graph<TMove> graph;
+        private AGame<TMove> game;
 
-        public Solution<T_Move> Solve(AGame<T_Move> game, Graph.INode<T_Move> finalState)
+        public virtual Solution<TMove> Solve(AGame<TMove> game, ANode<TMove> finalState)
         {
-            this.graph = new Graph.Graph<T_Move>(game.State);
+            this.graph = new Graph<TMove>(game.State);
             this.game = game; //as AGame<Graph.INode<T_Move>, T_Move>;
 
             // Le noeud passé en paramètre est supposé être le noeud initial
@@ -22,7 +18,7 @@ namespace Solver2.Solve.Method
             this.graph.Opened.Add(N);
             
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
-            while (this.graph.Opened.Count != 0 && !finalState.SameAs(N))
+            while (this.graph.Opened.Count != 0 && !finalState.Equals(N))
             {
                 // Le meilleur noeud des ouverts est supposé placé en tête de liste
                 // On le place dans les fermés
@@ -46,11 +42,11 @@ namespace Solver2.Solve.Method
             }
 
             this.graph.Finish(N);
-            return Solution<T_Move>.BuildPathFrom(this.graph);
+            return Solution<TMove>.BuildPathFrom(this.graph);
         }
 
 
-        public void UpdateSuccessors(Graph.INode<T_Move> N, Graph.INode<T_Move> finalState)
+        public void UpdateSuccessors(ANode<TMove> N, ANode<TMove> finalState)
         {
             // On fait appel à GetListSucc, méthode abstraite qu'on doit réécrire pour chaque
             // problème. Elle doit retourner la liste complète des noeuds successeurs de N.
@@ -106,7 +102,7 @@ namespace Solver2.Solve.Method
             }
         }
 
-        public void InsertNewNodeInOpenList(Graph.INode<T_Move> newNode)
+        public void InsertNewNodeInOpenList(ANode<TMove> newNode)
         {
             // Insertion pour respecter l'ordre du cout total le plus petit au plus grand
             if (this.graph.Opened.Count == 0)

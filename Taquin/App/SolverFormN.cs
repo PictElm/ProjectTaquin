@@ -15,7 +15,8 @@ namespace App
 
         private Solver2.Taquin.TaquinGame game;
         private Solver2.Solve.ISolve<Solver2.Taquin.TaquinGame.Move> solver;
-        private Random rng;
+
+        private readonly Random rng;
 
         private Button[,] buttons;
         private Button _selected;
@@ -35,9 +36,9 @@ namespace App
         }
 
 
-        public SolverFormN()
+        public SolverFormN(int size, int gaps)
         {
-            this.game = new Solver2.Taquin.TaquinGame(3, 1);
+            this.game = new Solver2.Taquin.TaquinGame(size, gaps);
             this.rng = new Random();
 
             this.InitializeComponent();
@@ -68,9 +69,11 @@ namespace App
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                 {
-                    Button button = new Button();
-                    button.Name = $"{i},{j}";
-                    button.Dock = DockStyle.Fill;
+                    Button button = new Button
+                    {
+                        Name = $"{i},{j}",
+                        Dock = DockStyle.Fill
+                    };
                     button.Click += new EventHandler(this.ButtonClicked);
 
                     this.buttons[i, j] = button;
@@ -106,7 +109,10 @@ namespace App
                     for (int i = 0; i < this.game.Size; i++)
                         for (int j = 0; j < this.game.Size; j++)
                             this.buttons[i, j].Enabled = value;
+
                     this.solveButton.Enabled = value;
+                    this.shuffleButton.Enabled = value;
+
                     this.UseWaitCursor = !value;
                 }
             }
@@ -165,15 +171,16 @@ namespace App
 
         private void shuffleButton_Click(object sender, EventArgs e)
         {
-            this.game.Shuffle(this.rng, 10);
+            this.game.Shuffle(this.rng, 100);
             this.UpdateGridDisplay(this.game.Grid);
             this.solutionListBox.DataSource = null;
         }
 
         private void solveButton_Click(object sender, EventArgs e)
         {
-            this.solvingBackgroundWorker.RunWorkerAsync();
             this.InputEnabled = false;
+
+            this.solvingBackgroundWorker.RunWorkerAsync();
             System.Diagnostics.Debug.WriteLine("Started background solving");
         }
 
@@ -188,9 +195,11 @@ namespace App
 
         private void solvingBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Finished background solving");
+            var solution = e.Result as Solver2.Solve.Solution<Solver2.Taquin.TaquinGame.Move>;
+            System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count} steps after exploring {solution.ExploredStates} game states");
+            this.solutionListBox.DataSource = solution.Steps;
+
             this.InputEnabled = true;
-            this.solutionListBox.DataSource = (e.Result as Solver2.Solve.Solution<Solver2.Taquin.TaquinGame.Move>).Steps;
         }
 
         private void solvingBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -207,8 +216,8 @@ namespace App
             var selectedNode = (Solver2.Taquin.TaquinNode)this.solutionListBox.SelectedItem;
             if (selectedNode != null)
             {
-                this.game.Grid = selectedNode.Grid;
-                this.UpdateGridDisplay(selectedNode.Grid);
+                this.game.State = selectedNode;
+                this.UpdateGridDisplay(this.game.Grid);
             }
         }
 

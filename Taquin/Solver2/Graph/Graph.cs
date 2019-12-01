@@ -2,57 +2,54 @@
 
 namespace Solver2.Graph
 {
-    public class Graph<T_Move>
+    public class Graph<TMove>
     {
 
-        private INode<T_Move> init;
-        private INode<T_Move> final;
+        public ANode<TMove> First { get; private set; }
+        public ANode<TMove> Last { get; private set; }
 
-        public List<INode<T_Move>> Opened { get; private set; }
-        public List<INode<T_Move>> Closed { get; private set; }
+        public List<ANode<TMove>> Opened { get; private set; }
+        public List<ANode<TMove>> Closed { get; private set; }
 
-        public Graph(INode<T_Move> init)
+        public Graph(ANode<TMove> init)
         {
-            this.init = init;
+            this.First = init;
 
-            this.Opened = new List<INode<T_Move>>();
-            this.Closed = new List<INode<T_Move>>();
+            this.Opened = new List<ANode<TMove>>();
+            this.Closed = new List<ANode<TMove>>();
         }
 
-        public INode<T_Move> FindIfExist(INode<T_Move> n)
+        public void Finish(ANode<TMove> final)
+        {
+            this.Last = final;
+        }
+
+        #region FindNode
+        public ANode<TMove> FindIfExist(ANode<TMove> n)
         {
             if (this.Closed.Count < this.Opened.Count)
                 return this.FindIfExistInClosed(n) ?? this.FindIfExistInOpened(n);
             return this.FindIfExistInOpened(n) ?? this.FindIfExistInClosed(n);
         }
 
-        public INode<T_Move> FindIfExistInOpened(INode<T_Move> n)
+        public ANode<TMove> FindIfExistInOpened(ANode<TMove> n)
         {
             foreach (var node in this.Opened)
-                if (n.SameAs(node))
+                if (n.Equals(node))
                     return node;
 
             return null;
         }
 
-        public INode<T_Move> FindIfExistInClosed(INode<T_Move> n)
+        public ANode<TMove> FindIfExistInClosed(ANode<TMove> n)
         {
             foreach (var node in this.Closed)
-                if (n.SameAs(node))
+                if (n.Equals(node))
                     return node;
 
             return null;
         }
-
-        public void Finish(INode<T_Move> final)
-        {
-            this.final = final;
-        }
-
-        public INode<T_Move> GetFinal()
-        {
-            return this.final;
-        }
+        #endregion
 
     }
 }

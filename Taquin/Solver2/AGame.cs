@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Solver2.Graph;
 
 namespace Solver2
 {
-    public abstract class AGame<T_Move>
+    public abstract class AGame<TMove>
     {
 
-        public abstract Graph.INode<T_Move> State { get; set; }
+        public abstract ANode<TMove> State { get; set; }
 
-        public abstract List<Graph.INode<T_Move>> NextNodes(Graph.INode<T_Move> from, Func<Graph.INode<T_Move>, bool> filter = null);
+        public abstract List<ANode<TMove>> NextNodes(ANode<TMove> from, Func<ANode<TMove>, bool> filter = null);
 
-        public abstract bool MakeMove(T_Move move);
+        public abstract bool MakeMove(TMove move);
 
-        public int MakeMoves(params T_Move[] moves)
+        public int MakeMoves(params TMove[] moves)
         {
             if (moves == null || moves.Length < 0)
                 return -1;

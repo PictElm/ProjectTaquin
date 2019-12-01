@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Solver2.Graph;
 
 namespace Solver2.Solve
 {
-    public class Solution<T_Move>
+    public class Solution<TMove>
     {
 
         /// <summary>
         /// Liste des étapes à suivre pour suivre la solution. Voir aussi : <seealso cref="Solution.Step"/>.
         /// </summary>
-        public List<Graph.INode<T_Move>> Steps { get; private set; }
+        public List<ANode<TMove>> Steps { get; private set; }
 
-        private Solution()
+        public List<TMove> Moves { get { return this.Steps.ConvertAll(node => node.MoveFromParent); } }
+
+        public int ExploredStates { get; private set; }
+
+        private Solution(int splored = 0)
         {
-            this.Steps = new List<Graph.INode<T_Move>>();
+            this.Steps = new List<ANode<TMove>>();
+
+            this.ExploredStates = splored;
         }
 
-        private Solution(params List<Graph.INode<T_Move>>[] manySteps) : this()
+        private Solution(int splored, params List<ANode<TMove>>[] manySteps) : this(splored)
         {
             this.Steps.Add(manySteps[0][0]); // TODO: FIXME: le premier état avec SolveEtapes n'a pas la bonne grille.?
 
@@ -46,10 +49,10 @@ namespace Solver2.Solve
         /// <param name="reversed"><code>true</code> si le résultat devrait être inversé (par
         /// exemple resolution depuis la fin).</param>
         /// <returns></returns>
-        public static Solution<T_Move> BuildPathFrom(Graph.Graph<T_Move> g, bool reversed = false)
+        public static Solution<TMove> BuildPathFrom(Graph<TMove> g, bool reversed = false)
         {
-            var r = new Solution<T_Move>();
-            Graph.INode<T_Move> current = g.GetFinal();
+            var r = new Solution<TMove>(g.Opened.Count + g.Closed.Count);
+            ANode<TMove> current = g.Last;
 
             while (current != null)
             {
@@ -71,13 +74,12 @@ namespace Solver2.Solve
         /// <param name="a">Premières étapes.</param>
         /// <param name="b">Dernières étapes.</param>
         /// <returns></returns>
-        public static Solution<T_Move> operator +(Solution<T_Move> a, Solution<T_Move> b)
+        public static Solution<TMove> operator +(Solution<TMove> a, Solution<TMove> b)
         {
-            if (a == null)
-                return b.Steps.Count == 0 ? null : new Solution<T_Move>(b.Steps);
-            if (b == null)
-                return a.Steps.Count == 0 ? null : new Solution<T_Move>(a.Steps);
-            return new Solution<T_Move>(a.Steps, b.Steps);
+            if (a == null) return b.Steps.Count == 0 ? null : new Solution<TMove>(b.ExploredStates, b.Steps);
+            if (b == null) return a.Steps.Count == 0 ? null : new Solution<TMove>(a.ExploredStates, a.Steps);
+
+            return new Solution<TMove>(a.ExploredStates + b.ExploredStates, a.Steps, b.Steps);
         }
 
     }

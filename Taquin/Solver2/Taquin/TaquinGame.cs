@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Solver2.Graph;
 
 namespace Solver2.Taquin
@@ -46,7 +43,7 @@ namespace Solver2.Taquin
 
         }
 
-        public override INode<Move> State
+        public override ANode<Move> State
         {
             get { return new TaquinNode(this.Grid); }
             set { this.Grid = (value as TaquinNode).Grid; }
@@ -72,7 +69,7 @@ namespace Solver2.Taquin
             set
             {
                 this._size = value;
-                this.Grid = TaquinGame.SortedGrid(value, this.Gaps);
+                this.Grid = SortedGrid(value, this.Gaps);
             }
         }
         public int Gaps { get; set; }
@@ -94,9 +91,9 @@ namespace Solver2.Taquin
             return r;
         }
 
-        public override List<INode<Move>> NextNodes(INode<Move> from, Func<INode<Move>, bool> filter = null)
+        public override List<ANode<Move>> NextNodes(ANode<Move> from, Func<ANode<Move>, bool> filter = null)
         {
-            var r = new List<INode<Move>>();
+            var r = new List<ANode<Move>>();
             var grid = (from as TaquinNode).Grid;
 
             // liste les coordonées des espaces vides
@@ -167,9 +164,7 @@ namespace Solver2.Taquin
                 int random = rng.Next(this.Gaps);
                 int[] gap = zeros[random];
 
-                int i1 = 0, j1 = 0;
-                int i2 = gap[0], j2 = gap[1];
-
+                int i1, j1, i2 = gap[0], j2 = gap[1];
                 // trouve une direction depuis laquel déplacer une case non vide
                 do
                 {
