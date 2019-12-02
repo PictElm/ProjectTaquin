@@ -10,8 +10,9 @@ namespace Solver2.Solve
         /// Liste des étapes à suivre pour suivre la solution. Voir aussi : <seealso cref="Solution.Step"/>.
         /// </summary>
         public List<ANode<TMove>> Steps { get; private set; }
-
         public List<TMove> Moves { get { return this.Steps.ConvertAll(node => node.MoveFromParent); } }
+
+        public ANode<TMove> Last { get { return this.Steps.Count == 0 ? null : this.Steps[this.Steps.Count - 1]; } }
 
         public int ExploredStates { get; private set; }
 
@@ -28,7 +29,7 @@ namespace Solver2.Solve
 
             foreach (var steps in manySteps)
                 foreach (var step in steps)
-                    if (step.MoveFromParent != null)
+                    if (step.Parent != null)
                         this.Steps.Add(step);
         }
 

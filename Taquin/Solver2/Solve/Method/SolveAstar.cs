@@ -2,11 +2,13 @@
 
 namespace Solver2.Solve.Method
 {
-    public class SolveAEtoile<TMove> : ISolve<TMove>
+    public class SolveAstar<TMove> : ISolve<TMove>
     {
 
         private Graph<TMove> graph;
         private AGame<TMove> game;
+
+        public ANode<TMove> FilterNode { get; protected set; } = null;
 
         public virtual Solution<TMove> Solve(AGame<TMove> game, ANode<TMove> finalState)
         {
@@ -45,13 +47,12 @@ namespace Solver2.Solve.Method
             return Solution<TMove>.BuildPathFrom(this.graph);
         }
 
-
         public void UpdateSuccessors(ANode<TMove> N, ANode<TMove> finalState)
         {
             // On fait appel à GetListSucc, méthode abstraite qu'on doit réécrire pour chaque
             // problème. Elle doit retourner la liste complète des noeuds successeurs de N.
-            //List<int[]> listsucc = Game.NextSteps(N.ToGrid());
-            foreach (var N2 in this.game.NextNodes(N))
+            var listsucc = this.FilterNode != null ? this.game.NextNodes(N, node => this.FilterNode.SameAs(node)) : this.game.NextNodes(N);
+            foreach (var N2 in listsucc)
             {
                 //INode<T_Move> N2 = new INode<T_Move>(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
                 //INode<T_Move> N2 = N.Next(move);

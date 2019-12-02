@@ -42,14 +42,15 @@
   <ItemGroup>
     <Compile Include="AGame.cs" />
     <Compile Include="Solve\ISolve.cs" />
-    <Compile Include="Solve\Method\ASolveEtapes.cs" />
-    <Compile Include="Solve\Method\SolveAEtoile.cs" />
+    <Compile Include="Solve\Method\ASolveSteps.cs" />
+    <Compile Include="Solve\Method\SolveAstar.cs" />
     <Compile Include="Solve\Solution.cs" />
     <Compile Include="Taquin\TaquinGame.cs" />
     <Compile Include="Graph\Graph.cs" />
     <Compile Include="Graph\ANode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Taquin\TaquinNode.cs" />
+    <Compile Include="Taquin\TaquinSolveSteps.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

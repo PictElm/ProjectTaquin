@@ -171,7 +171,7 @@ namespace App
 
         private void shuffleButton_Click(object sender, EventArgs e)
         {
-            this.game.Shuffle(this.rng, 100);
+            this.game.Shuffle(this.rng, 10);
             this.UpdateGridDisplay(this.game.Grid);
             this.solutionListBox.DataSource = null;
         }
@@ -206,7 +206,7 @@ namespace App
         {
             int[,] finalGrid = Solver2.Taquin.TaquinGame.SortedGrid(this.game.Size, this.game.Gaps);
 
-            this.solver = new Solver2.Solve.Method.SolveAEtoile<Solver2.Taquin.TaquinGame.Move>();
+            this.solver = new Solver2.Taquin.TaquinSolveSteps(); //new Solver2.Solve.Method.SolveAstar<Solver2.Taquin.TaquinGame.Move>();
             var solution = solver.Solve(this.game, new Solver2.Taquin.TaquinNode(finalGrid));
             e.Result = solution;
         }
