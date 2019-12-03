@@ -46,7 +46,9 @@ namespace Solver2.Graph
         #region Overrides
         public override bool Equals(object obj)
         {
-            if (!(obj is ANode<TMove> mate)) return false;
+            //if (!(obj is ANode<TMove> mate)) return false; // #retro-compatibilité
+            if (!(obj is ANode<TMove>)) return false;
+            var mate = obj as ANode<TMove>;
 
             if (Object.ReferenceEquals(this, mate)) return true;
             if (null == this as Object) return null == mate as Object;

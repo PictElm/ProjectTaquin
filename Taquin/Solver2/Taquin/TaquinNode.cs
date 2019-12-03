@@ -47,35 +47,35 @@ namespace Solver2.Taquin
         /// </summary>
         internal static int Heuristics_DistanceManhattan(int[,] fromState, int[,] toState)
         {
-            int r = 0;
-            relatedSize = fromState.GetLength(0);
+            int[][] supposed = new int[toState.GetLength(0) * toState.GetLength(1)][];
 
-            // calcule la distance de Manhattan pour chaque
+            // détermine là où les cases deveraient être
+            for (int i = 0; i < toState.GetLength(0); i++)
+                for (int j = 0; j < toState.GetLength(1); j++)
+                    if (0 < toState[i, j])
+                        supposed[toState[i, j] - 1] = new int[2] { i, j };
+
+            int r = 0;
+
+            // calcule la distance de Manhattan pour chaque case
             for (int i = 0; i < fromState.GetLength(0); i++)
                 for (int j = 0; j < fromState.GetLength(1); j++)
                 {
                     int here = fromState[i, j];
-                    int[] pos = Supposed[0 < here ? here - 1 : Supposed.Length - 1];
-                    r += Math.Abs(pos[0] - i) + Math.Abs(pos[1] - j);
+                    if (0 < here)
+                    {
+                        int[] pos = supposed[here - 1];
+                        if (pos != null)
+                        {
+                            int dist = Math.Abs(pos[0] - i) + Math.Abs(pos[1] - j);
+                            r += dist * dist;
+                        }
+                        else
+                            r += fromState.GetLength(0) + fromState.GetLength(1);
+                    }
                 }
 
             return r;
-        }
-        private static int[][] _supposed;
-        private static int relatedSize;
-        private static int[][] Supposed
-        {
-            get
-            {
-                if (_supposed == null)
-                {
-                    // détermine là où les cases deveraient être
-                    _supposed = new int[relatedSize * relatedSize][];
-                    for (int k = 0; k < _supposed.Length; k++)
-                        _supposed[k] = new int[2] { k / relatedSize, k % relatedSize };
-                }
-                return _supposed;
-            }
         }
         #endregion
 

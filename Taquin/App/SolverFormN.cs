@@ -171,7 +171,7 @@ namespace App
 
         private void shuffleButton_Click(object sender, EventArgs e)
         {
-            this.game.Shuffle(this.rng, 10);
+            this.game.Shuffle(this.rng, 100);
             this.UpdateGridDisplay(this.game.Grid);
             this.solutionListBox.DataSource = null;
         }
