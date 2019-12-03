@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Solver;
+using Solver2;
+using Solver2.Taquin;
+using Solver2.Solve;
+using Solver2.Graph;
 
 namespace App2
 {
@@ -16,9 +19,10 @@ namespace App2
 
         private int size = 3;
 
-        private Game game = new Game(3, 1);
+        private TaquinGame game = new TaquinGame(3, 1);
+        private int[,] initialGame;
 
-        private Game result = new Game(3, 1);
+        private TaquinGame result = new TaquinGame(3, 1);
 
         private Button _selected;
 
@@ -37,7 +41,7 @@ namespace App2
             }
         }
 
-        private ISolve solver;
+        private ISolve<TaquinGame.Move> solver;
 
         private Button[,] buttons;
         private Button[,] buttonsResult;
@@ -45,6 +49,8 @@ namespace App2
         public MainForm()
         {
             this.InitializeComponent();
+
+            this.initialGame = CopyGrid(game.Grid);
 
             this.buttons = new Button[size, size];
             this.buttonsResult = new Button[size, size];
@@ -113,10 +119,10 @@ namespace App2
                 }
         }
 
-        public void SetGame(Game game)
+        public void SetGame(TaquinGame game)
         {
             this.game = game;
-            this.UpdateGridDisplay(game.ToGrid());
+            this.UpdateGridDisplay(game.Grid);
         }
 
         private void UpdateGridDisplay(int[,] grid)
@@ -129,9 +135,9 @@ namespace App2
                 }
         }
 
-        public void SetResult(Game game)
+        public void SetResult(TaquinGame game)
         {
-            this.UpdateResultDisplay(game.ToGrid());
+            this.UpdateResultDisplay(game.Grid);
         }
 
         private void UpdateResultDisplay(int[,] grid)
@@ -167,8 +173,8 @@ namespace App2
 
         private void solutionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Solution.Step selectedNode = (Solution.Step)this.SolverTracker.SelectedItem;
-            this.UpdateGridDisplay(selectedNode.grid);
+            var selectedNode = (TaquinNode)this.SolverTracker.SelectedItem;
+            this.UpdateGridDisplay(selectedNode.Grid);
         }
 
         private void SolverLaunch_Click(object sender, EventArgs e)
@@ -208,7 +214,7 @@ namespace App2
                     int[] from = this.GetCoords(this.Selected);
                     int[] to = this.GetCoords(target);
 
-                    if (this.game.MakeMove(from[0], from[1], to[0], to[1]))
+                    if (this.game.MakeMove(new TaquinGame.Move(from[0], from[1], to[0], to[1])))
                     {
                         target.Text = this.Selected.Text;
                         this.Selected.Text = "";
@@ -235,13 +241,34 @@ namespace App2
 
             this.buttons = new Button[size, size];
             this.buttonsResult = new Button[size, size];
-            this.game = new Game(newSize, newBlanks);
-            this.result = new Game(newSize, newBlanks);
+            this.game = new TaquinGame(newSize, newBlanks);
+            this.result = new TaquinGame(newSize, newBlanks);
+
+            this.initialGame = CopyGrid(game.Grid);
 
             InitializeGrid(size);
             InitializeResult(size);
             this.SetGame(game);
             this.SetResult(game);
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            this.game.Grid = initialGame;
+            UpdateGridDisplay(game.Grid);
+        }
+
+        private int[,] CopyGrid(int[,] grid)
+        {
+            int[,] copy = new int[this.size, this.size];
+            for (int i = 0; i < this.size ; i++)
+            {
+                for (int j = 0; j < this.size; j++)
+                {
+                    copy[i, j] = grid[i, j];
+                }
+            }
+            return copy;
         }
     }
 }
