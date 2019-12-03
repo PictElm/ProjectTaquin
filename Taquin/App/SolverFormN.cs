@@ -221,5 +221,9 @@ namespace App
             }
         }
 
+        private void gameTablePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

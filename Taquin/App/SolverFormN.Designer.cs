@@ -94,6 +94,7 @@
             this.gameTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
             this.gameTablePanel.Size = new System.Drawing.Size(164, 261);
             this.gameTablePanel.TabIndex = 1;
+            this.gameTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.gameTablePanel_Paint);
             // 
             // shuffleButton
             // 

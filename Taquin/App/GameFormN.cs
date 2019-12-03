@@ -134,5 +134,9 @@ namespace App
             }
         }
 
+        private void GameFormN_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -52,6 +52,7 @@
             this.Controls.Add(this.gameTablePanel);
             this.Name = "GameFormN";
             this.Text = "GameFormN";
+            this.Load += new System.EventHandler(this.GameFormN_Load);
             this.ResumeLayout(false);
 
         }
