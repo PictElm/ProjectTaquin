@@ -33,16 +33,14 @@
             this.solutionListBox = new System.Windows.Forms.ListBox();
             this.solveButton = new System.Windows.Forms.Button();
             this.gameTablePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.debugLabel = new System.Windows.Forms.Label();
+            this.shuffleButton = new System.Windows.Forms.Button();
             this.solverSidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // solvingBackgroundWorker
             // 
-            this.solvingBackgroundWorker.WorkerReportsProgress = true;
             this.solvingBackgroundWorker.WorkerSupportsCancellation = true;
             this.solvingBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.solvingBackgroundWorker_DoWork);
-            this.solvingBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.solvingBackgroundWorker_ProgressChanged);
             this.solvingBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.solvingBackgroundWorker_RunWorkerCompleted);
             // 
             // solverSidePanel
@@ -51,7 +49,7 @@
             this.solverSidePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.solverSidePanel.Controls.Add(this.solutionListBox, 0, 0);
             this.solverSidePanel.Controls.Add(this.solveButton, 0, 1);
-            this.solverSidePanel.Controls.Add(this.debugLabel, 0, 2);
+            this.solverSidePanel.Controls.Add(this.shuffleButton, 0, 2);
             this.solverSidePanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.solverSidePanel.Location = new System.Drawing.Point(0, 0);
             this.solverSidePanel.Name = "solverSidePanel";
@@ -98,16 +96,16 @@
             this.gameTablePanel.TabIndex = 1;
             this.gameTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.gameTablePanel_Paint);
             // 
-            // debugLabel
+            // shuffleButton
             // 
-            this.debugLabel.AutoSize = true;
-            this.debugLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.debugLabel.Location = new System.Drawing.Point(3, 221);
-            this.debugLabel.Name = "debugLabel";
-            this.debugLabel.Size = new System.Drawing.Size(114, 40);
-            this.debugLabel.TabIndex = 2;
-            this.debugLabel.Text = "debug";
-            this.debugLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.shuffleButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.shuffleButton.Location = new System.Drawing.Point(3, 224);
+            this.shuffleButton.Name = "shuffleButton";
+            this.shuffleButton.Size = new System.Drawing.Size(114, 34);
+            this.shuffleButton.TabIndex = 2;
+            this.shuffleButton.Text = "Mélanger";
+            this.shuffleButton.UseVisualStyleBackColor = true;
+            this.shuffleButton.Click += new System.EventHandler(this.shuffleButton_Click);
             // 
             // SolverFormN
             // 
@@ -119,7 +117,6 @@
             this.Name = "SolverFormN";
             this.Text = "SolverFormN";
             this.solverSidePanel.ResumeLayout(false);
-            this.solverSidePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -130,6 +127,6 @@
         private System.Windows.Forms.ListBox solutionListBox;
         private System.Windows.Forms.Button solveButton;
         private System.Windows.Forms.TableLayoutPanel gameTablePanel;
-        private System.Windows.Forms.Label debugLabel;
+        private System.Windows.Forms.Button shuffleButton;
     }
 }

@@ -122,7 +122,7 @@
             this.gameSizeNum.Size = new System.Drawing.Size(73, 20);
             this.gameSizeNum.TabIndex = 2;
             this.gameSizeNum.Value = new decimal(new int[] {
-            4,
+            3,
             0,
             0,
             0});
@@ -140,7 +140,7 @@
             this.shuffleMovesNum.Size = new System.Drawing.Size(73, 20);
             this.shuffleMovesNum.TabIndex = 3;
             this.shuffleMovesNum.Value = new decimal(new int[] {
-            50,
+            20,
             0,
             0,
             0});
