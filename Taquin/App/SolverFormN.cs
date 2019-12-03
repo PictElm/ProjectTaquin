@@ -127,5 +127,9 @@ namespace App
             this.UpdateGridDisplay(selectedNode.grid);
         }
 
+        private void gameTablePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
