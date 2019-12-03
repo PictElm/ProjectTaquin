@@ -47,6 +47,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolveBrutForce.cs" />
     <Compile Include="SolveAEtoile.cs" />
+    <Compile Include="ASolveEtapes.cs" />
+    <Compile Include="SolveEtapesCroiss.cs" />
+    <Compile Include="SolveEtapesLineaire.cs" />
+    <Compile Include="SolveEtapesTest.cs" />
+    <Compile Include="SolveEtapesTest2.cs" />
+    <Compile Include="SolveEtapesTest3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

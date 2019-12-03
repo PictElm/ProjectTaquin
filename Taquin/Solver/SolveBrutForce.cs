@@ -9,7 +9,7 @@ namespace Solver
     public class SolveBrutForce : ISolve
     {
 
-        public Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress)
+        virtual public Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress=null)
         {
             Graph g = new Graph(new Node(game.ToGrid()));
 

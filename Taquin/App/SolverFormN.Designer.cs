@@ -33,6 +33,7 @@
             this.solutionListBox = new System.Windows.Forms.ListBox();
             this.solveButton = new System.Windows.Forms.Button();
             this.gameTablePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.debugLabel = new System.Windows.Forms.Label();
             this.solverSidePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,11 +51,13 @@
             this.solverSidePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.solverSidePanel.Controls.Add(this.solutionListBox, 0, 0);
             this.solverSidePanel.Controls.Add(this.solveButton, 0, 1);
+            this.solverSidePanel.Controls.Add(this.debugLabel, 0, 2);
             this.solverSidePanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.solverSidePanel.Location = new System.Drawing.Point(0, 0);
             this.solverSidePanel.Name = "solverSidePanel";
-            this.solverSidePanel.RowCount = 2;
+            this.solverSidePanel.RowCount = 3;
             this.solverSidePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.solverSidePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.solverSidePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.solverSidePanel.Size = new System.Drawing.Size(120, 261);
             this.solverSidePanel.TabIndex = 0;
@@ -65,14 +68,14 @@
             this.solutionListBox.FormattingEnabled = true;
             this.solutionListBox.Location = new System.Drawing.Point(3, 3);
             this.solutionListBox.Name = "solutionListBox";
-            this.solutionListBox.Size = new System.Drawing.Size(114, 215);
+            this.solutionListBox.Size = new System.Drawing.Size(114, 175);
             this.solutionListBox.TabIndex = 0;
             this.solutionListBox.SelectedIndexChanged += new System.EventHandler(this.solutionListBox_SelectedIndexChanged);
             // 
             // solveButton
             // 
             this.solveButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.solveButton.Location = new System.Drawing.Point(3, 224);
+            this.solveButton.Location = new System.Drawing.Point(3, 184);
             this.solveButton.Name = "solveButton";
             this.solveButton.Size = new System.Drawing.Size(114, 34);
             this.solveButton.TabIndex = 1;
@@ -95,6 +98,17 @@
             this.gameTablePanel.TabIndex = 1;
             this.gameTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.gameTablePanel_Paint);
             // 
+            // debugLabel
+            // 
+            this.debugLabel.AutoSize = true;
+            this.debugLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.debugLabel.Location = new System.Drawing.Point(3, 221);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(114, 40);
+            this.debugLabel.TabIndex = 2;
+            this.debugLabel.Text = "debug";
+            this.debugLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SolverFormN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +119,7 @@
             this.Name = "SolverFormN";
             this.Text = "SolverFormN";
             this.solverSidePanel.ResumeLayout(false);
+            this.solverSidePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -115,5 +130,6 @@
         private System.Windows.Forms.ListBox solutionListBox;
         private System.Windows.Forms.Button solveButton;
         private System.Windows.Forms.TableLayoutPanel gameTablePanel;
+        private System.Windows.Forms.Label debugLabel;
     }
 }

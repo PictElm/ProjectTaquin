@@ -11,17 +11,22 @@ using Solver;
 
 namespace App
 {
-    public partial class GameForm : Form
+    public partial class GameForm : AGameForm
     {
-        public Game newGame = new Game(3, 2);
+        public Game newGame;
         private List<Button> btnList = new List<Button>() { };
         private Button btnPressed;
         public GameForm()
         {
             InitializeComponent();
+            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
+        }
+
+        public override void SetGame(Game game)
+        {
+            newGame = game;
             Random r = new Random();
             newGame.Shuffle(r, 50);
-            btnList = new List<Button> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9 };
             RefreshBoard();
         }
 

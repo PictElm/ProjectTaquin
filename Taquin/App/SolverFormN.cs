@@ -68,6 +68,21 @@ namespace App
             this.UpdateGridDisplay(game.ToGrid());
         }
 
+        public bool InputEnabled
+        {
+            set
+            {
+                if (value != this.solveButton.Enabled)
+                {
+                    for (int i = 0; i < this.game.GetSize(); i++)
+                        for (int j = 0; j < this.game.GetSize(); j++)
+                            this.buttons[i, j].Enabled = value;
+                    this.solveButton.Enabled = value;
+                    this.UseWaitCursor = !value;
+                }
+            }
+        }
+
         private void UpdateButtonTheme(Button b)
         {
             if (b.Text.Equals(""))
@@ -89,6 +104,7 @@ namespace App
         private void solveButton_Click(object sender, EventArgs e)
         {
             this.solvingBackgroundWorker.RunWorkerAsync();
+            this.InputEnabled = false;
             System.Diagnostics.Debug.WriteLine("Started background solving");
         }
 
@@ -103,12 +119,19 @@ namespace App
 
         private void solvingBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            this.UpdateGridDisplay(e.UserState as int[,]);
+            var report = e.UserState as Solution.ProgressReportObject;
+
+            this.UpdateGridDisplay(report.state);
+            this.debugLabel.Text = $"o+c: {report.nbOpened + report.nbClosed}";
+            this.Refresh();
+            Application.DoEvents();
+            System.Diagnostics.Debug.WriteLine("Progress update!");
         }
 
         private void solvingBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Finished background solving");
+            this.InputEnabled = true;
             this.solutionListBox.DataSource = (e.Result as Solution).Steps;
         }
 
@@ -116,8 +139,8 @@ namespace App
         {
             int[,] finalGrid = new Game(this.game.GetSize(), this.game.CountGaps()).ToGrid();
 
-            this.solver = new SolveAEtoile();
-            Solution solution = solver.Solve(this.game, finalGrid, state => this.solvingBackgroundWorker.ReportProgress(0, state));
+            this.solver = new SolveEtapesTest3(); //new SolveAEtoile();
+            Solution solution = solver.Solve(this.game, finalGrid, report => this.solvingBackgroundWorker.ReportProgress(0, report));
             e.Result = solution;
         }
 

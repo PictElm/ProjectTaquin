@@ -11,11 +11,11 @@ namespace Solver
 
         private Graph g;
 
-        public Solution Solve(Game game, int[,] finalState, Action<int[,]> reportProgress)
+        public virtual Solution Solve(Game game, int[,] finalState, Action<Solution.ProgressReportObject> reportProgress=null)
         {
             this.g = new Graph(new Node(game.ToGrid()));
 
-            String finalNodeTestString = new Node(finalState).ToString();
+            Node finalNode = new Node(finalState);
 
             // Le noeud passé en paramètre est supposé être le noeud initial
             Node N = new Node(game.ToGrid());
@@ -23,10 +23,12 @@ namespace Solver
 
             int k = 0;
             // tant que le noeud n'est pas terminal et que ouverts n'est pas vide
-            while (this.g.Opened.Count != 0 && N.ToString() != finalNodeTestString)
+            while (this.g.Opened.Count != 0 && finalNode != N)
             {
+                k++;
                 //if (k++ % 100 == 0)
-                    reportProgress.Invoke(N.ToGrid());
+                if (reportProgress != null)
+                    reportProgress.Invoke(new Solution.ProgressReportObject(N.ToGrid(), g.Opened.Count, g.Closed.Count));
 
                 // Le meilleur noeud des ouverts est supposé placé en tête de liste
                 // On le place dans les fermés
@@ -61,6 +63,7 @@ namespace Solver
             foreach (int[] move in listsucc)
             {
                 Node N2 = new Node(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
+
                 // N2 est-il une copie d'un nœud déjà vu et placé dans la liste des fermés ?
                 Node N2bis = g.FindIfExistInClosed(N2);
                 if (N2bis == null)
