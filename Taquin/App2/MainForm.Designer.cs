@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.nUDBlanks = new System.Windows.Forms.NumericUpDown();
             this.TaquinTable = new System.Windows.Forms.TableLayoutPanel();
+            this.backgroundSolver = new System.ComponentModel.BackgroundWorker();
             this.CadreSolveur.SuspendLayout();
             this.tLPRight.SuspendLayout();
             this.tLPDown.SuspendLayout();
@@ -60,6 +61,7 @@
             this.SolverTracker.Name = "SolverTracker";
             this.SolverTracker.Size = new System.Drawing.Size(178, 456);
             this.SolverTracker.TabIndex = 0;
+            this.SolverTracker.SelectedIndexChanged += new System.EventHandler(this.SolverTracker_SelectedIndexChanged);
             // 
             // SolverLaunch
             // 
@@ -120,7 +122,7 @@
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.22134F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.77866F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
-            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
             this.tLPDown.Controls.Add(this.ResetButton, 0, 0);
             this.tLPDown.Controls.Add(this.SizeButton, 3, 0);
             this.tLPDown.Controls.Add(this.tableLayoutPanel3, 1, 0);
@@ -133,14 +135,13 @@
             this.tLPDown.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tLPDown.Size = new System.Drawing.Size(503, 55);
             this.tLPDown.TabIndex = 9;
-            this.tLPDown.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // ResetButton
             // 
             this.ResetButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResetButton.Location = new System.Drawing.Point(3, 3);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(119, 49);
+            this.ResetButton.Size = new System.Drawing.Size(118, 49);
             this.ResetButton.TabIndex = 0;
             this.ResetButton.Text = "Réinitialiser";
             this.ResetButton.UseVisualStyleBackColor = true;
@@ -149,9 +150,9 @@
             // SizeButton
             // 
             this.SizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SizeButton.Location = new System.Drawing.Point(392, 3);
+            this.SizeButton.Location = new System.Drawing.Point(389, 3);
             this.SizeButton.Name = "SizeButton";
-            this.SizeButton.Size = new System.Drawing.Size(108, 49);
+            this.SizeButton.Size = new System.Drawing.Size(111, 49);
             this.SizeButton.TabIndex = 1;
             this.SizeButton.Text = "Changer la taille du Taquin";
             this.SizeButton.UseVisualStyleBackColor = true;
@@ -163,12 +164,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.nUDSize, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.lblTailleTaquin, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(128, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(127, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(129, 49);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(127, 49);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // nUDSize
@@ -176,7 +177,7 @@
             this.nUDSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nUDSize.Location = new System.Drawing.Point(3, 3);
             this.nUDSize.Name = "nUDSize";
-            this.nUDSize.Size = new System.Drawing.Size(123, 20);
+            this.nUDSize.Size = new System.Drawing.Size(121, 20);
             this.nUDSize.TabIndex = 3;
             this.nUDSize.Value = new decimal(new int[] {
             3,
@@ -190,11 +191,10 @@
             this.lblTailleTaquin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTailleTaquin.Location = new System.Drawing.Point(3, 24);
             this.lblTailleTaquin.Name = "lblTailleTaquin";
-            this.lblTailleTaquin.Size = new System.Drawing.Size(123, 25);
+            this.lblTailleTaquin.Size = new System.Drawing.Size(121, 25);
             this.lblTailleTaquin.TabIndex = 4;
             this.lblTailleTaquin.Text = "Taille Taquin";
             this.lblTailleTaquin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblTailleTaquin.Click += new System.EventHandler(this.label1_Click);
             // 
             // tableLayoutPanel4
             // 
@@ -202,7 +202,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.nUDBlanks, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(263, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(260, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -247,6 +247,12 @@
             this.TaquinTable.Size = new System.Drawing.Size(503, 456);
             this.TaquinTable.TabIndex = 10;
             // 
+            // backgroundSolver
+            // 
+            this.backgroundSolver.WorkerSupportsCancellation = true;
+            this.backgroundSolver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSolver_DoWork);
+            this.backgroundSolver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSolver_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +296,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nUDBlanks;
+        private System.ComponentModel.BackgroundWorker backgroundSolver;
     }
 }
 

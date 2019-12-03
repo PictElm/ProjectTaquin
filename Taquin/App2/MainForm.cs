@@ -171,32 +171,6 @@ namespace App2
             }
         }
 
-        private void solutionListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedNode = (TaquinNode)this.SolverTracker.SelectedItem;
-            this.UpdateGridDisplay(selectedNode.Grid);
-        }
-
-        private void SolverLaunch_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private int[] GetCoords(Button b)
         {
             String[] tmp = b.Name.Split(',');
@@ -269,6 +243,59 @@ namespace App2
                 }
             }
             return copy;
+        }
+
+        public bool InputEnabled
+        {
+            set
+            {
+                if (value != this.SolverLaunch.Enabled)
+                {
+                    for (int i = 0; i < this.game.Size; i++)
+                        for (int j = 0; j < this.game.Size; j++)
+                            this.buttons[i, j].Enabled = value;
+
+                    this.SolverLaunch.Enabled = value;
+                    this.ResetButton.Enabled = value;
+                    this.SizeButton.Enabled = value;
+
+                    this.UseWaitCursor = !value;
+                }
+            }
+        }
+
+        private void SolverLaunch_Click(object sender, EventArgs e)
+        {
+            this.InputEnabled = false;
+
+            this.backgroundSolver.RunWorkerAsync();
+            System.Diagnostics.Debug.WriteLine("Started background solving");
+        }
+
+        private void backgroundSolver_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.solver = new TaquinSolveSteps();
+            var solution = this.solver.Solve(this.game, this.result.State);
+            e.Result = solution;
+        }
+
+        private void backgroundSolver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var solution = e.Result as Solution<TaquinGame.Move>;
+            System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count} steps after exploring {solution.ExploredStates} game states");
+            this.SolverTracker.DataSource = solution.Steps;
+
+            this.InputEnabled = true;
+        }
+
+        private void SolverTracker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedNode = this.SolverTracker.SelectedItem as TaquinNode;
+            if (selectedNode != null)
+            {
+                this.game.State = selectedNode;
+                this.UpdateGridDisplay(this.game.Grid);
+            }
         }
     }
 }
