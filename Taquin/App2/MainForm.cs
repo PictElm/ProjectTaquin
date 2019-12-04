@@ -25,8 +25,9 @@ namespace App2
 
         public TaquinGame result = new TaquinGame(3, 1);
 
-        private Button _selected;
+        private readonly Random rng = new Random();
 
+        private Button _selected;
         private Button Selected
         {
             get { return this._selected; }
@@ -257,29 +258,48 @@ namespace App2
 
         public bool InputEnabled
         {
+            get { return this.ResetButton.Enabled; }
             set
             {
-                if (value != this.SolverLaunch.Enabled)
+                if (value != this.ResetButton.Enabled)
                 {
                     for (int i = 0; i < this.game.Size; i++)
                         for (int j = 0; j < this.game.Size; j++)
                             this.buttons[i, j].Enabled = value;
 
-                    this.SolverLaunch.Enabled = value;
+                    this.ShuffleButton.Enabled = value;
                     this.ResetButton.Enabled = value;
                     this.SizeButton.Enabled = value;
 
                     this.UseWaitCursor = !value;
+
+                    this.SolverLaunch.Text = value ? "Lancer le Solveur" : "Arrêter le Solveur";
                 }
             }
         }
 
         private void SolverLaunch_Click(object sender, EventArgs e)
         {
-            this.InputEnabled = false;
+            if (this.InputEnabled)
+            {
+                this.InputEnabled = false;
 
-            this.backgroundSolver.RunWorkerAsync();
-            System.Diagnostics.Debug.WriteLine("Started background solving");
+                this.backgroundSolver.RunWorkerAsync();
+                System.Diagnostics.Debug.WriteLine("Started background solving");
+            }
+            else
+            {
+                this.InputEnabled = true;
+
+                this.backgroundSolver.CancelAsync();
+                System.Diagnostics.Debug.WriteLine("Stopped background solving");
+            }
+        }
+
+        private void ButtonShuffle_Click(object sender, EventArgs e)
+        {
+            this.game.Shuffle(this.rng, 10);
+            this.UpdateGridDisplay(this.game.Grid);
         }
 
         private void backgroundSolver_DoWork(object sender, DoWorkEventArgs e)
