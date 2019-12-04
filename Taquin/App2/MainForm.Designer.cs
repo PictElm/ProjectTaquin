@@ -44,6 +44,7 @@
             this.nUDBlanks = new System.Windows.Forms.NumericUpDown();
             this.TaquinTable = new System.Windows.Forms.TableLayoutPanel();
             this.backgroundSolver = new System.ComponentModel.BackgroundWorker();
+            this.ShuffleButton = new System.Windows.Forms.Button();
             this.CadreSolveur.SuspendLayout();
             this.tLPRight.SuspendLayout();
             this.tLPDown.SuspendLayout();
@@ -59,7 +60,7 @@
             this.SolverTracker.FormattingEnabled = true;
             this.SolverTracker.Location = new System.Drawing.Point(3, 3);
             this.SolverTracker.Name = "SolverTracker";
-            this.SolverTracker.Size = new System.Drawing.Size(178, 456);
+            this.SolverTracker.Size = new System.Drawing.Size(178, 425);
             this.SolverTracker.TabIndex = 0;
             this.SolverTracker.SelectedIndexChanged += new System.EventHandler(this.SolverTracker_SelectedIndexChanged);
             // 
@@ -68,26 +69,28 @@
             this.SolverLaunch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SolverLaunch.Location = new System.Drawing.Point(3, 465);
+            this.SolverLaunch.Location = new System.Drawing.Point(3, 434);
             this.SolverLaunch.Name = "SolverLaunch";
-            this.SolverLaunch.Size = new System.Drawing.Size(178, 43);
+            this.SolverLaunch.Size = new System.Drawing.Size(178, 34);
             this.SolverLaunch.TabIndex = 1;
-            this.SolverLaunch.Text = "Lancer Le Solveur";
+            this.SolverLaunch.Text = "Lancer le Solveur";
             this.SolverLaunch.UseVisualStyleBackColor = true;
             this.SolverLaunch.Click += new System.EventHandler(this.SolverLaunch_Click);
             // 
             // CadreSolveur
             // 
             this.CadreSolveur.ColumnCount = 1;
-            this.CadreSolveur.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.CadreSolveur.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.CadreSolveur.Controls.Add(this.SolverTracker, 0, 0);
             this.CadreSolveur.Controls.Add(this.SolverLaunch, 0, 1);
+            this.CadreSolveur.Controls.Add(this.ShuffleButton, 0, 2);
             this.CadreSolveur.Dock = System.Windows.Forms.DockStyle.Left;
             this.CadreSolveur.Location = new System.Drawing.Point(0, 0);
             this.CadreSolveur.Name = "CadreSolveur";
-            this.CadreSolveur.RowCount = 2;
-            this.CadreSolveur.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.55441F));
-            this.CadreSolveur.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.445585F));
+            this.CadreSolveur.RowCount = 3;
+            this.CadreSolveur.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.CadreSolveur.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.CadreSolveur.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.CadreSolveur.Size = new System.Drawing.Size(184, 511);
             this.CadreSolveur.TabIndex = 2;
             // 
@@ -122,7 +125,7 @@
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.22134F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.77866F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
-            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117F));
             this.tLPDown.Controls.Add(this.ResetButton, 0, 0);
             this.tLPDown.Controls.Add(this.SizeButton, 3, 0);
             this.tLPDown.Controls.Add(this.tableLayoutPanel3, 1, 0);
@@ -141,7 +144,7 @@
             this.ResetButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResetButton.Location = new System.Drawing.Point(3, 3);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(118, 49);
+            this.ResetButton.Size = new System.Drawing.Size(117, 49);
             this.ResetButton.TabIndex = 0;
             this.ResetButton.Text = "Réinitialiser";
             this.ResetButton.UseVisualStyleBackColor = true;
@@ -150,9 +153,9 @@
             // SizeButton
             // 
             this.SizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SizeButton.Location = new System.Drawing.Point(389, 3);
+            this.SizeButton.Location = new System.Drawing.Point(388, 3);
             this.SizeButton.Name = "SizeButton";
-            this.SizeButton.Size = new System.Drawing.Size(111, 49);
+            this.SizeButton.Size = new System.Drawing.Size(112, 49);
             this.SizeButton.TabIndex = 1;
             this.SizeButton.Text = "Changer la taille du Taquin";
             this.SizeButton.UseVisualStyleBackColor = true;
@@ -164,7 +167,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.nUDSize, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.lblTailleTaquin, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(127, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(126, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -202,7 +205,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.nUDBlanks, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(260, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(259, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -253,6 +256,17 @@
             this.backgroundSolver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSolver_DoWork);
             this.backgroundSolver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSolver_RunWorkerCompleted);
             // 
+            // ButtonShuffle
+            // 
+            this.ShuffleButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ShuffleButton.Location = new System.Drawing.Point(3, 474);
+            this.ShuffleButton.Name = "ButtonShuffle";
+            this.ShuffleButton.Size = new System.Drawing.Size(178, 34);
+            this.ShuffleButton.TabIndex = 2;
+            this.ShuffleButton.Text = "Mélanger le Jeu";
+            this.ShuffleButton.UseVisualStyleBackColor = true;
+            this.ShuffleButton.Click += new System.EventHandler(this.ButtonShuffle_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,6 +311,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nUDBlanks;
         private System.ComponentModel.BackgroundWorker backgroundSolver;
+        private System.Windows.Forms.Button ShuffleButton;
     }
 }
 
