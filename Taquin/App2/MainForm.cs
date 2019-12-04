@@ -17,12 +17,13 @@ namespace App2
     public partial class MainForm : Form
     {
 
-        private int size = 3;
+        public int size = 3;
+        public int nbBlanks = 1;
 
         private TaquinGame game = new TaquinGame(3, 1);
         private int[,] initialGame;
 
-        private TaquinGame result = new TaquinGame(3, 1);
+        public TaquinGame result = new TaquinGame(3, 1);
 
         private Button _selected;
 
@@ -41,6 +42,9 @@ namespace App2
             }
         }
 
+        private Stack<int[,]> PrecedingMoves = new Stack<int[,]>();
+        private Stack<int[,]> ForwardMoves = new Stack<int[,]>();
+
         private ISolve<TaquinGame.Move> solver;
 
         private Button[,] buttons;
@@ -51,6 +55,7 @@ namespace App2
             this.InitializeComponent();
 
             this.initialGame = CopyGrid(game.Grid);
+            PrecedingMoves.Push(initialGame);
 
             this.buttons = new Button[size, size];
             this.buttonsResult = new Button[size, size];
@@ -185,6 +190,8 @@ namespace App2
             {
                 if (this.Selected != null)
                 {
+                    PrecedingMoves.Push(CopyGrid(this.game.Grid));
+                    ForwardMoves.Clear();
                     int[] from = this.GetCoords(this.Selected);
                     int[] to = this.GetCoords(target);
 
@@ -209,6 +216,7 @@ namespace App2
             int newSize = (int) nUDSize.Value;
             int newBlanks = (int) nUDBlanks.Value;
             this.size = newSize;
+            this.nbBlanks = newBlanks;
 
             this.TaquinTable.Controls.Clear();
             this.ResultTable.Controls.Clear();
@@ -224,6 +232,8 @@ namespace App2
             InitializeResult(size);
             this.SetGame(game);
             this.SetResult(game);
+            PrecedingMoves.Clear();
+            ForwardMoves.Clear();
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -296,6 +306,48 @@ namespace App2
                 this.game.State = selectedNode;
                 this.UpdateGridDisplay(this.game.Grid);
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tLPRight_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblNextNb_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStepBack_Click(object sender, EventArgs e)
+        {
+            if (PrecedingMoves.Count != 0)
+            {
+                ForwardMoves.Push(CopyGrid(this.game.Grid));
+                this.game.Grid = PrecedingMoves.Pop();
+                this.UpdateGridDisplay(this.game.Grid);
+            }
+        }
+
+        private void btnStepForward_Click(object sender, EventArgs e)
+        {
+            if (ForwardMoves.Count != 0)
+            {
+                PrecedingMoves.Push(CopyGrid(this.game.Grid));
+                this.game.Grid = ForwardMoves.Pop();
+                this.UpdateGridDisplay(this.game.Grid);
+            }
+        }
+
+        private void btnChangeResult_Click(object sender, EventArgs e)
+        {
+            ResultForm newResultForm = new ResultForm(this);
+            newResultForm.ShowDialog();
+            UpdateResultDisplay(this.result.Grid);
         }
     }
 }
