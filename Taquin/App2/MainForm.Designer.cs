@@ -31,6 +31,7 @@
             this.SolverTracker = new System.Windows.Forms.ListBox();
             this.SolverLaunch = new System.Windows.Forms.Button();
             this.CadreSolveur = new System.Windows.Forms.TableLayoutPanel();
+            this.ShuffleButton = new System.Windows.Forms.Button();
             this.tLPRight = new System.Windows.Forms.TableLayoutPanel();
             this.ResultTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -49,7 +50,6 @@
             this.nUDBlanks = new System.Windows.Forms.NumericUpDown();
             this.TaquinTable = new System.Windows.Forms.TableLayoutPanel();
             this.backgroundSolver = new System.ComponentModel.BackgroundWorker();
-            this.ShuffleButton = new System.Windows.Forms.Button();
             this.CadreSolveur.SuspendLayout();
             this.tLPRight.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -101,6 +101,17 @@
             this.CadreSolveur.Size = new System.Drawing.Size(184, 511);
             this.CadreSolveur.TabIndex = 2;
             // 
+            // ShuffleButton
+            // 
+            this.ShuffleButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ShuffleButton.Location = new System.Drawing.Point(3, 474);
+            this.ShuffleButton.Name = "ShuffleButton";
+            this.ShuffleButton.Size = new System.Drawing.Size(178, 34);
+            this.ShuffleButton.TabIndex = 2;
+            this.ShuffleButton.Text = "Mélanger le Jeu";
+            this.ShuffleButton.UseVisualStyleBackColor = true;
+            this.ShuffleButton.Click += new System.EventHandler(this.ButtonShuffle_Click);
+            // 
             // tLPRight
             // 
             this.tLPRight.ColumnCount = 1;
@@ -116,7 +127,6 @@
             this.tLPRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tLPRight.Size = new System.Drawing.Size(200, 511);
             this.tLPRight.TabIndex = 7;
-            this.tLPRight.Paint += new System.Windows.Forms.PaintEventHandler(this.tLPRight_Paint);
             // 
             // ResultTable
             // 
@@ -202,7 +212,7 @@
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.22134F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.77866F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
-            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.tLPDown.Controls.Add(this.ResetButton, 0, 0);
             this.tLPDown.Controls.Add(this.SizeButton, 3, 0);
             this.tLPDown.Controls.Add(this.tableLayoutPanel3, 1, 0);
@@ -221,7 +231,7 @@
             this.ResetButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResetButton.Location = new System.Drawing.Point(3, 3);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(116, 49);
+            this.ResetButton.Size = new System.Drawing.Size(115, 49);
             this.ResetButton.TabIndex = 0;
             this.ResetButton.Text = "Réinitialiser";
             this.ResetButton.UseVisualStyleBackColor = true;
@@ -230,9 +240,9 @@
             // SizeButton
             // 
             this.SizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SizeButton.Location = new System.Drawing.Point(385, 3);
+            this.SizeButton.Location = new System.Drawing.Point(382, 3);
             this.SizeButton.Name = "SizeButton";
-            this.SizeButton.Size = new System.Drawing.Size(115, 49);
+            this.SizeButton.Size = new System.Drawing.Size(118, 49);
             this.SizeButton.TabIndex = 1;
             this.SizeButton.Text = "Changer la taille du Taquin";
             this.SizeButton.UseVisualStyleBackColor = true;
@@ -244,12 +254,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.nUDSize, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.lblTailleTaquin, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(125, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(124, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(125, 49);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(123, 49);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // nUDSize
@@ -257,7 +267,7 @@
             this.nUDSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nUDSize.Location = new System.Drawing.Point(3, 3);
             this.nUDSize.Name = "nUDSize";
-            this.nUDSize.Size = new System.Drawing.Size(119, 20);
+            this.nUDSize.Size = new System.Drawing.Size(117, 20);
             this.nUDSize.TabIndex = 3;
             this.nUDSize.Value = new decimal(new int[] {
             3,
@@ -271,7 +281,7 @@
             this.lblTailleTaquin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTailleTaquin.Location = new System.Drawing.Point(3, 24);
             this.lblTailleTaquin.Name = "lblTailleTaquin";
-            this.lblTailleTaquin.Size = new System.Drawing.Size(119, 25);
+            this.lblTailleTaquin.Size = new System.Drawing.Size(117, 25);
             this.lblTailleTaquin.TabIndex = 4;
             this.lblTailleTaquin.Text = "Taille Taquin";
             this.lblTailleTaquin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -282,7 +292,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.nUDBlanks, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(256, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(253, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -333,17 +343,6 @@
             this.backgroundSolver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSolver_DoWork);
             this.backgroundSolver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSolver_RunWorkerCompleted);
             // 
-            // ButtonShuffle
-            // 
-            this.ShuffleButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ShuffleButton.Location = new System.Drawing.Point(3, 474);
-            this.ShuffleButton.Name = "ButtonShuffle";
-            this.ShuffleButton.Size = new System.Drawing.Size(178, 34);
-            this.ShuffleButton.TabIndex = 2;
-            this.ShuffleButton.Text = "Mélanger le Jeu";
-            this.ShuffleButton.UseVisualStyleBackColor = true;
-            this.ShuffleButton.Click += new System.EventHandler(this.ButtonShuffle_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,7 +356,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Solveur Traquin";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.CadreSolveur.ResumeLayout(false);
             this.tLPRight.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

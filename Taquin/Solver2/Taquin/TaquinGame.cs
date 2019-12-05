@@ -91,7 +91,7 @@ namespace Solver2.Taquin
             return r;
         }
 
-        public override List<ANode<Move>> NextNodes(ANode<Move> from, Func<ANode<Move>, bool> filter = null)
+        protected override List<ANode<Move>> BuildNextNodes(ANode<Move> from)
         {
             var r = new List<ANode<Move>>();
             var grid = (from as TaquinNode).Grid;
@@ -130,9 +130,7 @@ namespace Solver2.Taquin
                         newGrid[i2, j2] = newGrid[i1, j1];
                         newGrid[i1, j1] = 0;
 
-                        TaquinNode n = new TaquinNode(newGrid, new TaquinGame.Move(i1, j1, i2, j2));
-                        if (filter == null || filter(n))
-                            r.Add(n);
+                        r.Add( new TaquinNode(newGrid, new TaquinGame.Move(i1, j1, i2, j2)) );
                     }
                 }
             }
@@ -171,7 +169,7 @@ namespace Solver2.Taquin
                     int direction = rng.Next(0, 4);
                     i1 = i2 - moves[direction][0];
                     j1 = j2 - moves[direction][1];
-                } while (!this.MakeMove(new TaquinGame.Move(i1, j1, i2, j2)));
+                } while ( !this.MakeMove(new TaquinGame.Move(i1, j1, i2, j2)) );
 
                 // maj du nouvel emplacement de l'espace vide
                 zeros[random] = new int[2] { i1, j1 };

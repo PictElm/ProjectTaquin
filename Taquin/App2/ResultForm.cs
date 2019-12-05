@@ -74,7 +74,7 @@ namespace App2
         {
             if (this.currentNumber - 1 == this.originForm.size * this.originForm.size - this.originForm.nbBlanks)
             {
-                originForm.result.Grid = this.Grid;
+                originForm.ChangeResult(this.Grid);
                 this.Close();
             }
         }

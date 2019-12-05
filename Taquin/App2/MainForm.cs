@@ -214,6 +214,8 @@ namespace App2
 
         private void SizeButton_Click(object sender, EventArgs e)
         {
+            this.SolverTracker.DataSource = null;
+
             int newSize = (int) nUDSize.Value;
             int newBlanks = (int) nUDBlanks.Value;
             this.size = newSize;
@@ -328,21 +330,6 @@ namespace App2
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tLPRight_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblNextNb_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnStepBack_Click(object sender, EventArgs e)
         {
             if (PrecedingMoves.Count != 0)
@@ -365,9 +352,19 @@ namespace App2
 
         private void btnChangeResult_Click(object sender, EventArgs e)
         {
+            if (this.backgroundSolver.IsBusy)
+                this.backgroundSolver.CancelAsync();
+
             ResultForm newResultForm = new ResultForm(this);
             newResultForm.ShowDialog();
-            UpdateResultDisplay(this.result.Grid);
         }
+
+        public void ChangeResult(int[,] grid)
+        {
+            this.result.Grid = grid;
+            this.SolverTracker.DataSource = null;
+            this.UpdateResultDisplay(this.result.Grid);
+        }
+
     }
 }

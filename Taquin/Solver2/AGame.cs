@@ -8,8 +8,24 @@ namespace Solver2
     {
 
         public abstract ANode<TMove> State { get; set; }
+        protected abstract List<ANode<TMove>> BuildNextNodes(ANode<TMove> from);
 
-        public abstract List<ANode<TMove>> NextNodes(ANode<TMove> from, Func<ANode<TMove>, bool> filter = null);
+        public List<ANode<TMove>> NextNodes(ANode<TMove> from, Predicate<ANode<TMove>> filter = null)
+        {
+            var all = this.BuildNextNodes(from);
+            
+            if (filter != null)
+            {
+                var filtered = all.FindAll(filter);
+                if (filtered.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("Had to pass filter : no steps left of " + all.Count);
+                    return all;
+                }
+                return filtered;
+            }
+            return all;
+        }
 
         public abstract bool MakeMove(TMove move);
 

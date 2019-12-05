@@ -14,8 +14,11 @@ namespace Solver2.Solve.Method
             {
                 var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
 
-                base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
+                // FIXME: over-filtering
+                //base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
                 Solution<TMove> partial = base.Solve(game, partFinalState);
+
+                System.Diagnostics.Debug.WriteLine($"Finished step {k + 1} of {count}");
                 game.State = partial.Last;
 
                 r += partial;
