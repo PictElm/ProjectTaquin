@@ -10,33 +10,51 @@ namespace Solver2.Taquin
     public class TaquinSolveSteps : Solve.Method.ASolveSteps<TaquinGame.Move>
     {
 
-        private int[] _centerPos;
-        private int[] GetCenterPos(int[,] destGrid)
+        private int x = 0;
+        private int y = 0;
+        private int w = 0;
+        private int h = 0;
+
+        private TaquinNode saved = null;
+        private TaquinNode filter = null;
+
+        private int[,] Select(int[,] grid, int x, int y, int w, int h)
         {
-            if (this._centerPos == null)
+            int[,] r = new int[w, h];
+
+            for (int i = 0; i < w; i++)
+                for (int j = 0; j < h; j++)
+                    r[i, j] = grid[x + i, y + j];
+
+            return r;
+        }
+
+        private bool IsGapIn(int[,] grid, int k, int dimStable)
+        {
+            if (dimStable == 1)
             {
-                for (int i = 0; i < destGrid.GetLength(0); i++)
-                    for (int j = 0; j < destGrid.GetLength(1); j++)
-                        if (destGrid[i, j] == 0)
-                        {
-                            this._centerPos = new int[2] { i, j };
-                            return this._centerPos;
-                        }
+                for (int i = 0; i < grid.GetLength(0); i++)
+                    if (grid[i, k] == 0)
+                        return true;
             }
-            return this._centerPos;
+            else
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                    if (grid[k, j] == 0)
+                        return true;
+            }
+            return false;
         }
 
-        private void Set(ref int[,] grid, int i, int j, int[,] src)
+        protected TaquinNode Build(TaquinGame gameRef, TaquinNode targetState, int n)
         {
-            int[] cPos = this.GetCenterPos(src);
-            i = (i - 1 + cPos[0]) % grid.GetLength(0);
-            j = (j - 1 + cPos[1]) % grid.GetLength(1);
-            grid[i, j] = src[i, j];
-        }
+            int sz = gameRef.Size;
 
-        protected override ANode<TaquinGame.Move> BuildSolutionStep(AGame<TaquinGame.Move> gameRef, ANode<TaquinGame.Move> targetState, int n)
-        {
-            int sz = (gameRef as TaquinGame).Size;
+            if (this.w < 1 || this.h < 1)
+            {
+                this.x = this.y = 0;
+                this.w = this.h = sz - 1;
+            }
 
             if (n == 0)
             {
@@ -50,27 +68,54 @@ namespace Solver2.Taquin
 
             if (n % 2 == 1)
             {
-                int[,] r1 = (this.BuildSolutionStep(gameRef, targetState, n - 1) as TaquinNode).Grid;
-                n /= 2;
+                int[,] r1 = this.Build(gameRef, targetState, n - 1).Grid;
 
-                for (int k = 0; k < sz; k++)
-                    this.Set(ref r1, n, k, (targetState as TaquinNode).Grid); //r1[n, k] = (targetState as TaquinNode).Grid[n, k];
+                if (!this.IsGapIn(targetState.Grid, x, 0))
+                {
+                    for (int k = y; k < y + h; k++)
+                        r1[x, k] = targetState.Grid[x, k];
+                    x++;
+                }
+                else
+                {
+                    for (int k = y; k < y + h; k++)
+                        r1[x + w, k] = targetState.Grid[x + w, k];
+                    w--;
+                }
 
                 return new TaquinNode(r1);
             }
+            else
+            {
+                int[,] r2 = this.Build(gameRef, targetState, n - 1).Grid;
 
-            int[,] r2 = (this.BuildSolutionStep(gameRef, targetState, n - 1) as TaquinNode).Grid;
-            n /= 2;
+                if (!this.IsGapIn(targetState.Grid, y, 1))
+                {
+                    for (int k = x; k < x - w; k++)
+                        r2[k, y] = targetState.Grid[k, y];
+                    y++;
+                }
+                else
+                {
+                    for (int k = w; k < x - w; k++)
+                        r2[k, y + h] = targetState.Grid[k, y + h];
+                    h--;
+                }
 
-            for (int k = 0; k < sz; k++)
-                this.Set(ref r2, k, n - 1, (targetState as TaquinNode).Grid); //r2[k, n - 1] = (targetState as TaquinNode).Grid[k, n - 1];
+                return new TaquinNode(r2);
+            }
+        }
 
-            return new TaquinNode(r2);
+        protected override ANode<TaquinGame.Move> BuildSolutionStep(AGame<TaquinGame.Move> gameRef, ANode<TaquinGame.Move> targetState, int n)
+        {
+            //this.filter = this.saved ?? this.Build(gameRef as TaquinGame, targetState as TaquinNode, 0);
+            this.saved = this.Build(gameRef as TaquinGame, targetState as TaquinNode, n);
+            return this.saved;
         }
 
         protected override ANode<TaquinGame.Move> BuildFilterNode(AGame<TaquinGame.Move> gameRef, ANode<TaquinGame.Move> targetState, int n, ANode<TaquinGame.Move> currentSolutionStep)
         {
-            return this.BuildSolutionStep(gameRef, targetState, n - 1);
+            return this.filter;
         }
 
         protected override int GetStepCount(AGame<TaquinGame.Move> game)

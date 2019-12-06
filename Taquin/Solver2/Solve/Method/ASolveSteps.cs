@@ -12,16 +12,17 @@ namespace Solver2.Solve.Method
             int count = this.GetStepCount(game);
             for (int k = 0; k < count; k++)
             {
-                var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
-
                 // TMP
+                this.BuildSolutionStep(game, finalState, 1);
                 var g = game as Taquin.TaquinGame;
-                var n = partFinalState as Taquin.TaquinNode;
+                var n = this.BuildSolutionStep(game, finalState, 2) as Taquin.TaquinNode;
                 for (int i = 0; i < g.Size; i++)
                     for (int j = 0; j < g.Size; j++)
                         g.Grid[i, j] = n.Grid[i, j];
                 return null;
                 
+                var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
+
                 base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
                 Solution<TMove> partial = base.Solve(game, partFinalState);
 
