@@ -314,9 +314,13 @@ namespace App2
         private void backgroundSolver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var solution = e.Result as Solution<TaquinGame.Move>;
-            System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count} steps after exploring {solution.ExploredStates} game states");
-            this.SolverTracker.DataSource = solution.Steps;
+            if (solution != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count} steps after exploring {solution.ExploredStates} game states");
+                this.SolverTracker.DataSource = solution.Steps;
+            }
 
+            this.UpdateGridDisplay(this.game.Grid);
             this.InputEnabled = true;
         }
 

@@ -10,6 +10,30 @@ namespace Solver2.Taquin
     public class TaquinSolveSteps : Solve.Method.ASolveSteps<TaquinGame.Move>
     {
 
+        private int[] _centerPos;
+        private int[] GetCenterPos(int[,] destGrid)
+        {
+            if (this._centerPos == null)
+            {
+                for (int i = 0; i < destGrid.GetLength(0); i++)
+                    for (int j = 0; j < destGrid.GetLength(1); j++)
+                        if (destGrid[i, j] == 0)
+                        {
+                            this._centerPos = new int[2] { i, j };
+                            return this._centerPos;
+                        }
+            }
+            return this._centerPos;
+        }
+
+        private void Set(ref int[,] grid, int i, int j, int[,] src)
+        {
+            int[] cPos = this.GetCenterPos(src);
+            i = (i - 1 + cPos[0]) % grid.GetLength(0);
+            j = (j - 1 + cPos[1]) % grid.GetLength(1);
+            grid[i, j] = src[i, j];
+        }
+
         protected override ANode<TaquinGame.Move> BuildSolutionStep(AGame<TaquinGame.Move> gameRef, ANode<TaquinGame.Move> targetState, int n)
         {
             int sz = (gameRef as TaquinGame).Size;
@@ -30,7 +54,7 @@ namespace Solver2.Taquin
                 n /= 2;
 
                 for (int k = 0; k < sz; k++)
-                    r1[n, k] = (targetState as TaquinNode).Grid[n, k];
+                    this.Set(ref r1, n, k, (targetState as TaquinNode).Grid); //r1[n, k] = (targetState as TaquinNode).Grid[n, k];
 
                 return new TaquinNode(r1);
             }
@@ -39,7 +63,7 @@ namespace Solver2.Taquin
             n /= 2;
 
             for (int k = 0; k < sz; k++)
-                r2[k, n - 1] = (targetState as TaquinNode).Grid[k, n - 1];
+                this.Set(ref r2, k, n - 1, (targetState as TaquinNode).Grid); //r2[k, n - 1] = (targetState as TaquinNode).Grid[k, n - 1];
 
             return new TaquinNode(r2);
         }

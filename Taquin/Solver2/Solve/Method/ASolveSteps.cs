@@ -14,8 +14,15 @@ namespace Solver2.Solve.Method
             {
                 var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
 
-                // FIXME: over-filtering
-                //base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
+                // TMP
+                var g = game as Taquin.TaquinGame;
+                var n = partFinalState as Taquin.TaquinNode;
+                for (int i = 0; i < g.Size; i++)
+                    for (int j = 0; j < g.Size; j++)
+                        g.Grid[i, j] = n.Grid[i, j];
+                return null;
+                
+                base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
                 Solution<TMove> partial = base.Solve(game, partFinalState);
 
                 System.Diagnostics.Debug.WriteLine($"Finished step {k + 1} of {count}");
