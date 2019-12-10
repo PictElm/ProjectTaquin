@@ -53,7 +53,7 @@ namespace Solver2.Taquin
             if (this.w < 1 || this.h < 1)
             {
                 this.x = this.y = 0;
-                this.w = this.h = sz - 1;
+                this.w = this.h = sz;
             }
 
             if (n == 0)
@@ -68,7 +68,7 @@ namespace Solver2.Taquin
 
             if (n % 2 == 1)
             {
-                int[,] r1 = this.Build(gameRef, targetState, n - 1).Grid;
+                int[,] r1 = this.saved?.Grid ?? this.Build(gameRef, targetState, n - 1).Grid;
 
                 if (!this.IsGapIn(targetState.Grid, x, 0))
                 {
@@ -79,28 +79,28 @@ namespace Solver2.Taquin
                 else
                 {
                     for (int k = y; k < y + h; k++)
-                        r1[x + w, k] = targetState.Grid[x + w, k];
-                    w--;
+                        r1[x + w - 1, k] = targetState.Grid[x + w - 1, k];
                 }
+                w--;
 
                 return new TaquinNode(r1);
             }
             else
             {
-                int[,] r2 = this.Build(gameRef, targetState, n - 1).Grid;
+                int[,] r2 = this.saved?.Grid ?? this.Build(gameRef, targetState, n - 1).Grid;
 
                 if (!this.IsGapIn(targetState.Grid, y, 1))
                 {
-                    for (int k = x; k < x - w; k++)
+                    for (int k = x; k < x + w; k++)
                         r2[k, y] = targetState.Grid[k, y];
                     y++;
                 }
                 else
                 {
-                    for (int k = w; k < x - w; k++)
-                        r2[k, y + h] = targetState.Grid[k, y + h];
-                    h--;
+                    for (int k = x; k < x + w; k++)
+                        r2[k, y + h - 1] = targetState.Grid[k, y + h - 1];
                 }
+                h--;
 
                 return new TaquinNode(r2);
             }
