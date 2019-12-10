@@ -366,5 +366,20 @@ namespace App2
             this.UpdateResultDisplay(this.result.Grid);
         }
 
+        private void btnChangeInit_Click(object sender, EventArgs e)
+        {
+            if (this.backgroundSolver.IsBusy)
+                this.backgroundSolver.CancelAsync();
+
+            InitForm newResultForm = new InitForm(this);
+            newResultForm.ShowDialog();
+        }
+
+        public void ChangeInit(int[,] grid)
+        {
+            this.game.Grid = grid;
+            this.SolverTracker.DataSource = null;
+            this.UpdateGridDisplay(this.game.Grid);
+        }
     }
 }
