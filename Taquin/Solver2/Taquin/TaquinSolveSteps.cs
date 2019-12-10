@@ -108,7 +108,7 @@ namespace Solver2.Taquin
 
         protected override ANode<TaquinGame.Move> BuildSolutionStep(AGame<TaquinGame.Move> gameRef, ANode<TaquinGame.Move> targetState, int n)
         {
-            //this.filter = this.saved ?? this.Build(gameRef as TaquinGame, targetState as TaquinNode, 0);
+            this.filter = this.saved ?? this.Build(gameRef as TaquinGame, targetState as TaquinNode, 0);
             this.saved = this.Build(gameRef as TaquinGame, targetState as TaquinNode, n);
             return this.saved;
         }

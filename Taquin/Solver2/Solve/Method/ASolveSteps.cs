@@ -4,9 +4,7 @@ namespace Solver2.Solve.Method
 {
     public abstract class ASolveSteps<TMove> : SolveAstar<TMove>
     {
-
-        static int test = 1;
-
+        
         public override Solution<TMove> Solve(AGame<TMove> game, ANode<TMove> finalState)
         {
             Solution<TMove> r = null;
@@ -14,17 +12,6 @@ namespace Solver2.Solve.Method
             int count = this.GetStepCount(game);
             for (int k = 0; k < count; k++)
             {
-                // TMP
-                for (int s = 1; s < test; this.BuildSolutionStep(game, finalState, s++));
-
-                var g = game as Taquin.TaquinGame;
-                var n = this.BuildSolutionStep(game, finalState, test++) as Taquin.TaquinNode;
-
-                for (int i = 0; i < g.Size; i++)
-                    for (int j = 0; j < g.Size; j++)
-                        g.Grid[i, j] = n.Grid[i, j];
-                return null;
-                
                 var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
 
                 base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);

@@ -17,12 +17,7 @@ namespace Solver2
             if (filter != null)
             {
                 var filtered = all.FindAll(filter);
-                if (filtered.Count == 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("Had to pass filter : no steps left of " + all.Count);
-                    return all;
-                }
-                return filtered;
+                return filtered.Count == 0 ? all : filtered;
             }
             return all;
         }
