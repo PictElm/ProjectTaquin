@@ -4,7 +4,7 @@ namespace Solver2.Solve.Method
 {
     public abstract class ASolveSteps<TMove> : SolveAstar<TMove>
     {
-
+        
         public override Solution<TMove> Solve(AGame<TMove> game, ANode<TMove> finalState)
         {
             Solution<TMove> r = null;
@@ -14,8 +14,7 @@ namespace Solver2.Solve.Method
             {
                 var partFinalState = this.BuildSolutionStep(game, finalState, k + 1);
 
-                // FIXME: over-filtering
-                //base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
+                base.FilterNode = this.BuildFilterNode(game, finalState, k + 1, partFinalState);
                 Solution<TMove> partial = base.Solve(game, partFinalState);
 
                 System.Diagnostics.Debug.WriteLine($"Finished step {k + 1} of {count}");
