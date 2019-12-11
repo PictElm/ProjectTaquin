@@ -45,6 +45,7 @@
             this.btnStepBack.TabIndex = 0;
             this.btnStepBack.Text = "Vers l\'arrière";
             this.btnStepBack.UseVisualStyleBackColor = true;
+            this.btnStepBack.Click += new System.EventHandler(this.btnStepBack_Click);
             // 
             // tlpbottom
             // 
@@ -73,6 +74,7 @@
             this.btnStepForward.TabIndex = 1;
             this.btnStepForward.Text = "Vers l\'Avant";
             this.btnStepForward.UseVisualStyleBackColor = true;
+            this.btnStepForward.Click += new System.EventHandler(this.btnStepForward_Click);
             // 
             // btnSend
             // 

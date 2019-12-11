@@ -21,6 +21,8 @@ namespace App2
         private int[,] Grid;
         private Button[,] Buttons;
         private int currentNumber = 1;
+        private Stack<int[,]> PrecedingMoves = new Stack<int[,]>();
+        private Stack<int[,]> ForwardMoves = new Stack<int[,]>();
 
         public ResultForm(MainForm unForm)
         {
@@ -30,6 +32,7 @@ namespace App2
             Grid = new int[size, size];
             Buttons = new Button[size, size];
             InitializeResult(size);
+            this.UpdateGridDisplay(this.Grid);
         }
 
         public void InitializeResult(int size)
@@ -63,11 +66,14 @@ namespace App2
         private void ButtonClicked(object sender, EventArgs e)
         {
             Button button = sender as Button;
+            PrecedingMoves.Push(CopyGrid(this.Grid));
+            ForwardMoves.Clear();
             button.Text = currentNumber.ToString();
             string[] tmpCoords = button.Name.Split(',');
             int i = int.Parse(tmpCoords[0]);
             int j = int.Parse(tmpCoords[1]);
-            Grid[i,j] = currentNumber++;
+            Grid[i, j] = currentNumber++;
+            this.UpdateGridDisplay(this.Grid);
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -77,6 +83,59 @@ namespace App2
                 originForm.ChangeResult(this.Grid);
                 this.Close();
             }
+        }
+
+        private void btnStepBack_Click(object sender, EventArgs e)
+        {
+            if (PrecedingMoves.Count != 0)
+            {
+                ForwardMoves.Push(CopyGrid(this.Grid));
+                this.Grid = PrecedingMoves.Pop();
+                this.currentNumber--;
+                this.UpdateGridDisplay(this.Grid);
+            }
+        }
+
+        private void btnStepForward_Click(object sender, EventArgs e)
+        {
+            if (ForwardMoves.Count != 0)
+            {
+                PrecedingMoves.Push(CopyGrid(this.Grid));
+                this.Grid = ForwardMoves.Pop();
+                this.currentNumber++;
+                this.UpdateGridDisplay(this.Grid);
+            }
+        }
+
+        private int[,] CopyGrid(int[,] grid)
+        {
+            int[,] copy = new int[this.size, this.size];
+            for (int i = 0; i < this.size; i++)
+            {
+                for (int j = 0; j < this.size; j++)
+                {
+                    copy[i, j] = grid[i, j];
+                }
+            }
+            return copy;
+        }
+
+        private void UpdateGridDisplay(int[,] grid)
+        {
+            for (int i = 0; i < grid.GetLength(0); i++)
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    this.Buttons[i, j].Text = grid[i, j] == 0 ? "" : grid[i, j].ToString();
+                    this.UpdateButtonTheme(this.Buttons[i, j]);
+                }
+        }
+
+        private void UpdateButtonTheme(Button b)
+        {
+            if (b.Text.Equals(""))
+                b.BackColor = Color.White;
+            else
+                b.BackColor = Color.LightGray;
         }
     }
 }

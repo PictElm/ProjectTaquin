@@ -36,6 +36,10 @@
             this.ResultTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnChangeResult = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnStepBack = new System.Windows.Forms.Button();
+            this.btnStepForward = new System.Windows.Forms.Button();
+            this.btnChangeInit = new System.Windows.Forms.Button();
             this.tLPDown = new System.Windows.Forms.TableLayoutPanel();
             this.ResetButton = new System.Windows.Forms.Button();
             this.SizeButton = new System.Windows.Forms.Button();
@@ -47,19 +51,15 @@
             this.nUDBlanks = new System.Windows.Forms.NumericUpDown();
             this.TaquinTable = new System.Windows.Forms.TableLayoutPanel();
             this.backgroundSolver = new System.ComponentModel.BackgroundWorker();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnStepForward = new System.Windows.Forms.Button();
-            this.btnStepBack = new System.Windows.Forms.Button();
-            this.btnChangeInit = new System.Windows.Forms.Button();
             this.CadreSolveur.SuspendLayout();
             this.tLPRight.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.tLPDown.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDSize)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDBlanks)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // SolverTracker
@@ -172,13 +172,61 @@
             this.btnChangeResult.UseVisualStyleBackColor = true;
             this.btnChangeResult.Click += new System.EventHandler(this.btnChangeResult_Click);
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.btnStepBack, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnStepForward, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 167);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(188, 59);
+            this.tableLayoutPanel2.TabIndex = 2;
+            // 
+            // btnStepBack
+            // 
+            this.btnStepBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStepBack.Location = new System.Drawing.Point(3, 3);
+            this.btnStepBack.Name = "btnStepBack";
+            this.btnStepBack.Size = new System.Drawing.Size(88, 53);
+            this.btnStepBack.TabIndex = 0;
+            this.btnStepBack.Text = "Coup précédent";
+            this.btnStepBack.UseVisualStyleBackColor = true;
+            this.btnStepBack.Click += new System.EventHandler(this.btnStepBack_Click);
+            // 
+            // btnStepForward
+            // 
+            this.btnStepForward.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStepForward.Location = new System.Drawing.Point(97, 3);
+            this.btnStepForward.Name = "btnStepForward";
+            this.btnStepForward.Size = new System.Drawing.Size(88, 53);
+            this.btnStepForward.TabIndex = 1;
+            this.btnStepForward.Text = "Coup\r\nsuivant";
+            this.btnStepForward.UseVisualStyleBackColor = true;
+            this.btnStepForward.Click += new System.EventHandler(this.btnStepForward_Click);
+            // 
+            // btnChangeInit
+            // 
+            this.btnChangeInit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnChangeInit.Location = new System.Drawing.Point(3, 48);
+            this.btnChangeInit.Name = "btnChangeInit";
+            this.btnChangeInit.Size = new System.Drawing.Size(188, 37);
+            this.btnChangeInit.TabIndex = 3;
+            this.btnChangeInit.Text = "Changer la grille actuelle";
+            this.btnChangeInit.UseVisualStyleBackColor = true;
+            this.btnChangeInit.Click += new System.EventHandler(this.btnChangeInit_Click);
+            // 
             // tLPDown
             // 
             this.tLPDown.ColumnCount = 4;
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.22134F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.77866F));
             this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
-            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
+            this.tLPDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tLPDown.Controls.Add(this.ResetButton, 0, 0);
             this.tLPDown.Controls.Add(this.SizeButton, 3, 0);
             this.tLPDown.Controls.Add(this.tableLayoutPanel3, 1, 0);
@@ -206,9 +254,9 @@
             // SizeButton
             // 
             this.SizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SizeButton.Location = new System.Drawing.Point(381, 3);
+            this.SizeButton.Location = new System.Drawing.Point(380, 3);
             this.SizeButton.Name = "SizeButton";
-            this.SizeButton.Size = new System.Drawing.Size(119, 49);
+            this.SizeButton.Size = new System.Drawing.Size(120, 49);
             this.SizeButton.TabIndex = 1;
             this.SizeButton.Text = "Changer la taille du Taquin";
             this.SizeButton.UseVisualStyleBackColor = true;
@@ -225,7 +273,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(123, 49);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(122, 49);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // nUDSize
@@ -233,7 +281,7 @@
             this.nUDSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nUDSize.Location = new System.Drawing.Point(3, 3);
             this.nUDSize.Name = "nUDSize";
-            this.nUDSize.Size = new System.Drawing.Size(117, 20);
+            this.nUDSize.Size = new System.Drawing.Size(116, 20);
             this.nUDSize.TabIndex = 3;
             this.nUDSize.Value = new decimal(new int[] {
             3,
@@ -247,7 +295,7 @@
             this.lblTailleTaquin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTailleTaquin.Location = new System.Drawing.Point(3, 24);
             this.lblTailleTaquin.Name = "lblTailleTaquin";
-            this.lblTailleTaquin.Size = new System.Drawing.Size(117, 25);
+            this.lblTailleTaquin.Size = new System.Drawing.Size(116, 25);
             this.lblTailleTaquin.TabIndex = 4;
             this.lblTailleTaquin.Text = "Taille Taquin";
             this.lblTailleTaquin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -258,7 +306,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.nUDBlanks, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(252, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(251, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -309,54 +357,6 @@
             this.backgroundSolver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSolver_DoWork);
             this.backgroundSolver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSolver_RunWorkerCompleted);
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.btnStepBack, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnStepForward, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 167);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(188, 59);
-            this.tableLayoutPanel2.TabIndex = 2;
-            // 
-            // btnStepForward
-            // 
-            this.btnStepForward.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStepForward.Location = new System.Drawing.Point(97, 3);
-            this.btnStepForward.Name = "btnStepForward";
-            this.btnStepForward.Size = new System.Drawing.Size(88, 53);
-            this.btnStepForward.TabIndex = 1;
-            this.btnStepForward.Text = "Coup\r\nsuivant";
-            this.btnStepForward.UseVisualStyleBackColor = true;
-            this.btnStepForward.Click += new System.EventHandler(this.btnStepForward_Click);
-            // 
-            // btnStepBack
-            // 
-            this.btnStepBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStepBack.Location = new System.Drawing.Point(3, 3);
-            this.btnStepBack.Name = "btnStepBack";
-            this.btnStepBack.Size = new System.Drawing.Size(88, 53);
-            this.btnStepBack.TabIndex = 0;
-            this.btnStepBack.Text = "Coup précédent";
-            this.btnStepBack.UseVisualStyleBackColor = true;
-            this.btnStepBack.Click += new System.EventHandler(this.btnStepBack_Click);
-            // 
-            // btnChangeInit
-            // 
-            this.btnChangeInit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnChangeInit.Location = new System.Drawing.Point(3, 48);
-            this.btnChangeInit.Name = "btnChangeInit";
-            this.btnChangeInit.Size = new System.Drawing.Size(188, 37);
-            this.btnChangeInit.TabIndex = 3;
-            this.btnChangeInit.Text = "Changer la grille actuelle";
-            this.btnChangeInit.UseVisualStyleBackColor = true;
-            this.btnChangeInit.Click += new System.EventHandler(this.btnChangeInit_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,6 +373,7 @@
             this.CadreSolveur.ResumeLayout(false);
             this.tLPRight.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.tLPDown.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -380,7 +381,6 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDBlanks)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
