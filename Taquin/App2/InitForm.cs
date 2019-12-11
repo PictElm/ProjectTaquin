@@ -62,14 +62,17 @@ namespace App2
         private void ButtonClicked(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            PrecedingMoves.Push(CopyGrid(this.Grid));
-            ForwardMoves.Clear();
-            button.Text = currentNumber.ToString();
-            string[] tmpCoords = button.Name.Split(',');
-            int i = int.Parse(tmpCoords[0]);
-            int j = int.Parse(tmpCoords[1]);
-            Grid[i, j] = currentNumber++;
-            this.UpdateGridDisplay(this.Grid);
+            if (button.Text == "")
+            {
+                PrecedingMoves.Push(CopyGrid(this.Grid));
+                ForwardMoves.Clear();
+                button.Text = currentNumber.ToString();
+                string[] tmpCoords = button.Name.Split(',');
+                int i = int.Parse(tmpCoords[0]);
+                int j = int.Parse(tmpCoords[1]);
+                Grid[i, j] = currentNumber++;
+                this.UpdateGridDisplay(this.Grid);
+            }
         }
 
         private void btnSend_Click(object sender, EventArgs e)
