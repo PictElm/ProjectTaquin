@@ -385,5 +385,16 @@ namespace App2
             this.SolverTracker.DataSource = null;
             this.UpdateGridDisplay(this.game.Grid);
         }
+
+        private void buttonGO_Click(object sender, EventArgs e)
+        {
+            String[] raw = this.textGO.Text.Split(',');
+            int[,] tmp = new int[this.size, this.size];
+            for (int i = 0, k = 0; i < this.size; i++)
+                for (int j = 0; j < this.size; j++)
+                    tmp[i, j] = int.Parse(raw[k++]);
+            this.game.Grid = tmp;
+            this.UpdateGridDisplay(this.game.Grid);
+        }
     }
 }

@@ -68,7 +68,7 @@ namespace Solver2.Taquin
                         if (pos != null)
                         {
                             int dist = Math.Abs(pos[0] - i) + Math.Abs(pos[1] - j);
-                            r += dist * dist;
+                            r += (int)Math.Pow(dist, 1.75);
                         }
                         else
                             r += fromState.GetLength(0) + fromState.GetLength(1);
