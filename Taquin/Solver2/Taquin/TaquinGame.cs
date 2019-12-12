@@ -25,11 +25,11 @@ namespace Solver2.Taquin
 
             public int[] To
             {
-                get { return new int[2] { this.i1, this.j1 }; }
+                get { return new int[2] { this.i2, this.j2 }; }
                 set
                 {
-                    this.i1 = value[0];
-                    this.j1 = value[1];
+                    this.i2 = value[0];
+                    this.j2 = value[1];
                 }
             }
 
