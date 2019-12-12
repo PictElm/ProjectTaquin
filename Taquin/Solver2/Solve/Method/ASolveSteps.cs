@@ -18,7 +18,13 @@ namespace Solver2.Solve.Method
                 Solution<TMove> partial = base.Solve(game, partFinalState);
 
                 System.Diagnostics.Debug.WriteLine($"Finished step {k + 1} of {count}");
-                game.State = partial.Last;
+                if (partial.Last != null)
+                    game.State = partial.Last;
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not reach exact solution, is puzzle feasible?");
+                    return r;
+                }
 
                 r += partial;
             }
