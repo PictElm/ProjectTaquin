@@ -22,7 +22,7 @@ namespace Solver2.Taquin
         }
 
         #region Heuristics
-        public override int Heuristics(ANode<TaquinGame.Move> final)
+        public override double Heuristics(ANode<TaquinGame.Move> final)
         {
             return Heuristics_DistanceManhattan(this.Grid, (final as TaquinNode).Grid);
         }
@@ -45,7 +45,7 @@ namespace Solver2.Taquin
         /// <summary>
         /// Somme des distances de Manhattan de chaque case à sa destination.
         /// </summary>
-        internal static int Heuristics_DistanceManhattan(int[,] fromState, int[,] toState)
+        internal static double Heuristics_DistanceManhattan(int[,] fromState, int[,] toState)
         {
             int[][] supposed = new int[toState.GetLength(0) * toState.GetLength(1)][];
 
@@ -55,7 +55,7 @@ namespace Solver2.Taquin
                     if (0 < toState[i, j])
                         supposed[toState[i, j] - 1] = new int[2] { i, j };
 
-            int r = 0;
+            double r = 0;
 
             // calcule la distance de Manhattan pour chaque case
             for (int i = 0; i < fromState.GetLength(0); i++)
@@ -68,7 +68,7 @@ namespace Solver2.Taquin
                         if (pos != null)
                         {
                             int dist = Math.Abs(pos[0] - i) + Math.Abs(pos[1] - j);
-                            r += (int)Math.Pow(dist, 1.75);
+                            r += Math.Pow(dist, 1.75);
                         }
                         else
                             r += fromState.GetLength(0) + fromState.GetLength(1);

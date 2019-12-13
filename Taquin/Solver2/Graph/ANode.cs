@@ -7,7 +7,7 @@ namespace Solver2.Graph
     {
 
         #region Abstract
-        public abstract int Heuristics(ANode<TMove> final);
+        public abstract double Heuristics(ANode<TMove> final);
         public abstract bool SameAs(ANode<TMove> mate);
         public abstract String Hash { get; }
         #endregion
@@ -38,9 +38,9 @@ namespace Solver2.Graph
         #endregion
 
         #region Costs
-        public int GCost { get; set; } // coût du chemin du noeud initial jusqu'à ce noeud
-        public int HCost { get; set; } // estimation heuristique du coût pour atteindre le noeud final
-        public int TotalCost { get { return this.GCost + this.HCost; } }
+        public double GCost { get; set; } // coût du chemin du noeud initial jusqu'à ce noeud
+        public double HCost { get; set; } // estimation heuristique du coût pour atteindre le noeud final
+        public double TotalCost { get { return this.GCost + this.HCost; } }
         #endregion
 
         #region Overrides

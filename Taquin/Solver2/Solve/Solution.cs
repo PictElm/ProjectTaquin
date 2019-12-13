@@ -25,7 +25,7 @@ namespace Solver2.Solve
 
         private Solution(int splored, params List<ANode<TMove>>[] manySteps) : this(splored)
         {
-            this.Steps.Add(manySteps[0][0]); // TODO: FIXME: le premier état avec SolveEtapes n'a pas la bonne grille.?
+            this.Steps.Add(manySteps[0][0]);
 
             foreach (var steps in manySteps)
                 foreach (var step in steps)

@@ -316,7 +316,7 @@ namespace App2
             var solution = e.Result as Solution<TaquinGame.Move>;
             if (solution != null)
             {
-                System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count} steps after exploring {solution.ExploredStates} game states");
+                System.Diagnostics.Debug.WriteLine($"Finished background solving, solution is {solution.Steps.Count-1} steps after exploring {solution.ExploredStates} game states");
                 this.SolverTracker.DataSource = solution.Steps;
             }
 

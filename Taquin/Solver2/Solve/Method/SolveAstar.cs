@@ -13,7 +13,7 @@ namespace Solver2.Solve.Method
         public virtual Solution<TMove> Solve(AGame<TMove> game, ANode<TMove> finalState)
         {
             this.graph = new Graph<TMove>(game.State);
-            this.game = game; //as AGame<Graph.INode<T_Move>, T_Move>;
+            this.game = game;
 
             // Le noeud passé en paramètre est supposé être le noeud initial
             var N = game.State;
@@ -54,9 +54,6 @@ namespace Solver2.Solve.Method
             var listsucc = this.FilterNode != null ? this.game.NextNodes(N, node => this.FilterNode.SameAs(node)) : this.game.NextNodes(N);
             foreach (var N2 in listsucc)
             {
-                //INode<T_Move> N2 = new INode<T_Move>(Game.SimulMove(move[0], move[1], move[2], move[3], N.ToGrid()));
-                //INode<T_Move> N2 = N.Next(move);
-
                 // N2 est-il une copie d'un nœud déjà vu et placé dans la liste des fermés ?
                 var N2bis = graph.FindIfExistInClosed(N2);
                 if (N2bis == null)
@@ -74,7 +71,6 @@ namespace Solver2.Solve.Method
                             // HCost pas recalculé car toujours bon
 
                             // Mise à jour de la famille ....
-                            //N2bis.Parent = N;
                             N.Attach(N2bis, N2.MoveFromParent);
 
                             // Mise à jour des ouverts
@@ -86,13 +82,11 @@ namespace Solver2.Solve.Method
                     else
                     {
                         // N2 est nouveau, MAJ et insertion dans les ouverts
-                        //N2.Parent = N;
                         N.Attach(N2, N2.MoveFromParent);
 
                         N2.GCost = N.GCost + 1;
                         N2.HCost = N2.Heuristics(finalState);
 
-                        //TODO[?]: mettre HCost à jour ici
                         this.InsertNewNodeInOpenList(N2);
                     }
 
